@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+    nginx:
+        image: nginx:latest
+        ports:
+            - "80:80"
+        restart: unless-stopped
+        volumes:
+            - './:/var/www/'
+            - './nginx/conf.d:/etc/nginx/conf.d/'
+        depends_on:
+            - php
+
+    php:
+        image: php:8.1-fpm
+        restart: unless-stopped
+        volumes:
+            - './:/var/www/'
+        depends_on:
+            - postgres
+
+    postgres:
+        image: postgres:latest
+        env_file:
+            - .env
+        restart: unless-stopped
+        ports:
+            - "5433:5432"
+        environment:
+            POSTGRES_USER: "${DB_USERNAME}"
+            POSTGRES_PASSWORD: "${DB_PASSWORD}"
+            POSTGRES_DB: "${DB_DATABASE}"
+            PGDATA: "/var/lib/postgresql/data"
+        volumes:
+            - 'pgdata:/var/lib/postgresql/data/'
+volumes:
+    pgdata:
