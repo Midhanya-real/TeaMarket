@@ -4,18 +4,21 @@ services:
     nginx:
         image: nginx:latest
         ports:
-            - "80:80"
+            - "81:80"
         restart: unless-stopped
         volumes:
             - './:/var/www/'
-            - './nginx/conf.d:/etc/nginx/conf.d/'
+            - '.docker/nginx/conf.d:/etc/nginx/conf.d/'
         depends_on:
             - php
 
     php:
-        image: php:8.1-fpm
+        build:
+            context: .docker/php
+            dockerfile: dockerfile
         restart: unless-stopped
         volumes:
+            - '.docker/php/php.ini:/usr/local/etc/php/conf.d/local.ini'
             - './:/var/www/'
         depends_on:
             - postgres
@@ -28,9 +31,10 @@ services:
         ports:
             - "5433:5432"
         environment:
+            POSTGRES_HOST: "${DB_HOST}"
+            POSTGRES_DB: "${DB_DATABASE}"
             POSTGRES_USER: "${DB_USERNAME}"
             POSTGRES_PASSWORD: "${DB_PASSWORD}"
-            POSTGRES_DB: "${DB_DATABASE}"
             PGDATA: "/var/lib/postgresql/data"
         volumes:
             - 'pgdata:/var/lib/postgresql/data/'
