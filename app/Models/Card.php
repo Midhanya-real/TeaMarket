@@ -17,6 +17,8 @@ class Card extends Model
         'balance' => 0.00,
     ];
 
+    protected $fillable = ['balance', 'user_id'];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
