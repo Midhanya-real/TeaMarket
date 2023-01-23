@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('cards', function (Blueprint $table) {
             $table->id();
-            $table->integer('number');
             $table->decimal('balance', 19, 2);
             $table->foreignId('user_id')->constrained('users')
                 ->cascadeOnDelete()
