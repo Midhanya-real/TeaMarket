@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Card;
+use App\Models\RoleUser;
 use App\Models\User;
 
 class UserObserver
@@ -17,6 +18,11 @@ class UserObserver
     {
         Card::create([
             'user_id' => $user->id,
+        ]);
+
+        RoleUser::create([
+            'user_id' => $user->id,
+            'role_id' => 3,
         ]);
     }
 
