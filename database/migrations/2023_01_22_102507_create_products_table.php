@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
+            $table->decimal('weight', 4, 2);
             $table->decimal('price', 7, 2);
             $table->foreignId('character_id')->constrained('characters')
                 ->cascadeOnUpdate()
