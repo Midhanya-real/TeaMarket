@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('type', 15);
             $table->string('factory', 20);
             $table->string('country', 100);
-            $table->decimal('weight', 4, 2);
         });
     }
 
