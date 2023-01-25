@@ -33,8 +33,7 @@ class ProductRepository
 
     public function getByBrand(string $brand): LazyCollection
     {
-        return Product::with('character')
-            ->whereHas('character', function (Builder $query) use ($brand) {
+        return Product::whereHas('character', function (Builder $query) use ($brand) {
                 $query->where('brand', '=', $brand);
             })
             ->lazy();
@@ -42,8 +41,7 @@ class ProductRepository
 
     public function getByType(string $type): LazyCollection
     {
-        return Product::with('character')
-            ->whereHas('character', function (Builder $query) use ($type) {
+        return Product::whereHas('character', function (Builder $query) use ($type) {
                 $query->where('type', '=', $type);
             })
             ->lazy();
@@ -51,8 +49,7 @@ class ProductRepository
 
     public function getByFactory(string $factory): LazyCollection
     {
-        return Product::with('character')
-            ->whereHas('character', function (Builder $query) use ($factory) {
+        return Product::whereHas('character', function (Builder $query) use ($factory) {
                 $query->where('factory', '=', $factory);
             })
             ->lazy();
@@ -60,8 +57,7 @@ class ProductRepository
 
     public function getByCountry(string $country): LazyCollection
     {
-        return Product::with('character')
-            ->whereHas('character', function (Builder $query) use ($country) {
+        return Product::whereHas('character', function (Builder $query) use ($country) {
                 $query->where('country', '=', $country);
             })
             ->lazy();
