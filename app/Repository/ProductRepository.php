@@ -2,14 +2,12 @@
 
 namespace App\Repository;
 
-use App\Models\Character;
 use App\Models\Product;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 use Illuminate\Support\LazyCollection;
 
-class ProductRepository
+class ProductRepository implements ProductRepositoryInterface
 {
     public function getAll(): LazyCollection
     {
