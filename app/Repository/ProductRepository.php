@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Models\Product;
-
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\LazyCollection;
 
@@ -14,7 +13,7 @@ class ProductRepository implements ProductRepositoryInterface
         return Product::select('name', 'weight', 'price')->lazy();
     }
 
-    public function getByName(string $name): LazyCollection
+    public function getByName(string $name): LazyCollection // полнотекстовый поиск
     {
         return Product::select('name', 'weight', 'price')
             ->where('name', $name)->lazy();
@@ -35,36 +34,18 @@ class ProductRepository implements ProductRepositoryInterface
     public function getByBrand(string $brand): LazyCollection
     {
         return Product::select('name', 'weight', 'price')
-            ->whereHas('character', function (Builder $query) use ($brand) {
-                $query->where('brand', '=', $brand);
-            })
-            ->lazy();
+            ->where('brand', $brand)->lazy();
     }
 
     public function getByType(string $type): LazyCollection
     {
         return Product::select('name', 'weight', 'price')
-            ->whereHas('character', function (Builder $query) use ($type) {
-                $query->where('type', '=', $type);
-            })
-            ->lazy();
-    }
-
-    public function getByFactory(string $factory): LazyCollection
-    {
-        return Product::select('name', 'weight', 'price')
-            ->whereHas('character', function (Builder $query) use ($factory) {
-                $query->where('factory', '=', $factory);
-            })
-            ->lazy();
+            ->where('type', $type)->lazy();
     }
 
     public function getByCountry(string $country): LazyCollection
     {
         return Product::select('name', 'weight', 'price')
-            ->whereHas('character', function (Builder $query) use ($country) {
-                $query->where('country', '=', $country);
-            })
-            ->lazy();
+            ->where('country', $country)->lazy();
     }
 }

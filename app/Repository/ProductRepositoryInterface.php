@@ -2,6 +2,9 @@
 
 namespace App\Repository;
 
+use App\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\LazyCollection;
 
 interface ProductRepositoryInterface
@@ -17,8 +20,6 @@ interface ProductRepositoryInterface
     public function getByBrand(string $brand): LazyCollection;
 
     public function getByType(string $type): LazyCollection;
-
-    public function getByFactory(string $factory): LazyCollection;
 
     public function getByCountry(string $country): LazyCollection;
 }
