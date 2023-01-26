@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\Address;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class CategoryController extends Controller
+class AddressController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,10 +42,10 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Category $category
+     * @param Address $address
      * @return Response
      */
-    public function show(Category $category)
+    public function show(Address $address)
     {
         //
     }
@@ -53,10 +53,10 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Category $category
+     * @param Address $address
      * @return Response
      */
-    public function edit(Category $category)
+    public function edit(Address $address)
     {
         //
     }
@@ -65,10 +65,10 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param Category $category
+     * @param Address $address
      * @return Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Address $address)
     {
         //
     }
@@ -76,10 +76,10 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Category $category
+     * @param Address $address
      * @return Response
      */
-    public function destroy(Category $category)
+    public function destroy(Address $address)
     {
         //
     }
