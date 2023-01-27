@@ -64,5 +64,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
+    
+        public function isAdmin(): bool
+    {
+        return $this->roles()->where('name', 'admin')->exists();
+    }
 
+    public function isModer(): bool
+    {
+        return $this->roles()->where('name', 'moder')->exists();
+    }
 }

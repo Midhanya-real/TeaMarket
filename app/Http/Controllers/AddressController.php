@@ -13,7 +13,7 @@ class AddressController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(): Response
     {
         //
     }
@@ -23,7 +23,7 @@ class AddressController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create(): Response
     {
         //
     }
@@ -34,7 +34,7 @@ class AddressController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request): Response
     {
         //
     }
@@ -45,7 +45,7 @@ class AddressController extends Controller
      * @param Address $address
      * @return Response
      */
-    public function show(Address $address)
+    public function show(Address $address): Response
     {
         //
     }
@@ -56,7 +56,7 @@ class AddressController extends Controller
      * @param Address $address
      * @return Response
      */
-    public function edit(Address $address)
+    public function edit(Address $address): Response
     {
         //
     }
@@ -68,7 +68,7 @@ class AddressController extends Controller
      * @param Address $address
      * @return Response
      */
-    public function update(Request $request, Address $address)
+    public function update(Request $request, Address $address): Response
     {
         //
     }
@@ -79,7 +79,7 @@ class AddressController extends Controller
      * @param Address $address
      * @return Response
      */
-    public function destroy(Address $address)
+    public function destroy(Address $address): Response
     {
         //
     }
