@@ -45,16 +45,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function isAdmin(): bool
-    {
-        return $this->roles()->where('name', 'admin')->exists();
-    }
-
-    public function isModer(): bool
-    {
-        return $this->roles()->where('name', 'moderator')->exists();
-    }
-
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class);
