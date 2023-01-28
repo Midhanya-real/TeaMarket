@@ -17,9 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('country', 20);
             $table->string('city', 20);
+            $table->string('street');
             $table->integer('house');
             $table->integer('apartment');
-            $table->integer('postcode');
+            $table->string('postcode', 12);
             $table->foreignId('user_id')->constrained('users')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();

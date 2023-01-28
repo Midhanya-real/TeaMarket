@@ -3,19 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Repository\AddressRepository;
+use App\Repository\AddressRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class AddressController extends Controller
 {
+
+    public function __construct(
+        private readonly AddressRepository $repository
+    ){}
+
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        //
+        $addresses = $this->repository->getAll($request);
+
+        return response($addresses);
     }
 
     /**
@@ -45,9 +54,11 @@ class AddressController extends Controller
      * @param Address $address
      * @return Response
      */
-    public function show(Address $address): Response
+    public function show(Request $request, Address $address): Response
     {
-        //
+        $userAddress = $this->repository->getById($request, $address);
+
+        return response($userAddress);
     }
 
     /**
