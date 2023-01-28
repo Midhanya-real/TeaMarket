@@ -3,26 +3,43 @@
 namespace App\Repository;
 
 use App\Models\Order;
+use Illuminate\Http\Request;
 use Illuminate\Support\LazyCollection;
 
 class OrderRepository implements OrderRepositoryInterface
 {
     /**
+     * @param Request $request
      * @return LazyCollection
      */
-    public function getAll(): LazyCollection
+    public function getAll(Request $request): LazyCollection
     {
-        return Order::select('status', 'created_at', 'updated_at')->lazy();
+        return $request->user()->can('viewAny')
+            ? Order::select('status', 'created_at', 'updated_at')->lazy()
+            : Order::whereBelongsTo($request->user())->select('status', 'created_at', 'updated_at')->lazy();
     }
 
     /**
+     * @param Request $request
      * @return LazyCollection
      */
-    public function getActive(): LazyCollection
+    public function getActive(Request $request): LazyCollection
     {
-        return Order::select('status', 'created_at', 'updated_at')
-            ->whereIn('status', ['getting', 'transit'])
-            ->lazy();
+        return $request->user()->can('viewAny')
+            ? Order::select('status', 'created_at', 'updated_at')
+                ->whereIn('status', ['getting', 'transit'])
+                ->lazy()
+            : Order::whereBelongsTo($request->user())
+                ->select('status', 'created_at', 'updated_at')
+                ->whereIn('status', ['getting', 'transit'])
+                ->lazy();
+    }
+
+    public function getById(Request $request, Order $order): Order|array
+    {
+        return $request->user()->can('view', $order)
+            ? $order->select('status', 'created_at', 'updated_at')->first()
+            : [];
     }
 }
 

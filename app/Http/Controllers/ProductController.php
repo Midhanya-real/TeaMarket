@@ -10,7 +10,7 @@ use Illuminate\Http\Response;
 class ProductController extends Controller
 {
     public function __construct(
-        private ProductRepository $repository
+        private readonly ProductRepository $repository
     ){}
     /**
      * Display a listing of the resource.

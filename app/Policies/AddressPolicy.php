@@ -2,15 +2,12 @@
 
 namespace App\Policies;
 
-use App\Models\Product;
+use App\Models\Address;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-/**
- *
- */
-class ProductPolicy
+class AddressPolicy
 {
     use HandlesAuthorization;
 
@@ -18,7 +15,7 @@ class ProductPolicy
      * @param User $user
      * @return bool
      */
-    public function before(User $user): bool
+    public function before(User $user)
     {
         return $user->isAdmin() || $user->isModer();
     }
@@ -31,19 +28,19 @@ class ProductPolicy
      */
     public function viewAny(User $user): Response|bool
     {
-        return true;
+        return $user->isAdmin() || $user->isModer();
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param User $user
-     * @param Product $product
+     * @param Address $address
      * @return Response|bool
      */
-    public function view(User $user, Product $product): Response|bool
+    public function view(User $user, Address $address)
     {
-        return true;
+        return $user->id == $address->user_id;
     }
 
     /**
@@ -52,7 +49,7 @@ class ProductPolicy
      * @param User $user
      * @return Response|bool
      */
-    public function create(User $user): Response|bool
+    public function create(User $user)
     {
         return true;
     }
@@ -61,47 +58,47 @@ class ProductPolicy
      * Determine whether the user can update the model.
      *
      * @param User $user
-     * @param Product $product
+     * @param Address $address
      * @return Response|bool
      */
-    public function update(User $user, Product $product): Response|bool
+    public function update(User $user, Address $address)
     {
-        return $user->isAdmin() || $user->isModer();
+        return $user->id === $address->user_id;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param User $user
-     * @param Product $product
+     * @param Address $address
      * @return Response|bool
      */
-    public function delete(User $user, Product $product): Response|bool
+    public function delete(User $user, Address $address)
     {
-        return $user->isAdmin() || $user->isModer();
+        return $user->id === $address->user_id;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param User $user
-     * @param Product $product
+     * @param Address $address
      * @return Response|bool
      */
-    public function restore(User $user, Product $product): Response|bool
+    public function restore(User $user, Address $address)
     {
-        return $user->isAdmin() || $user->isModer();
+        return $user->id === $address->user_id;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param User $user
-     * @param Product $product
+     * @param Address $address
      * @return Response|bool
      */
-    public function forceDelete(User $user, Product $product): Response|bool
+    public function forceDelete(User $user, Address $address)
     {
-        return $user->isAdmin() || $user->isModer();
+        return $user->id === $address->user_id;
     }
 }
