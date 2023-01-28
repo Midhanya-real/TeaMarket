@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Order;
+use App\Resources\OrderResources\OrderStatuses;
 use Illuminate\Http\Request;
 use Illuminate\Support\LazyCollection;
 
@@ -27,11 +28,11 @@ class OrderRepository implements OrderRepositoryInterface
     {
         return $request->user()->can('viewAny')
             ? Order::select('status', 'created_at', 'updated_at')
-                ->whereIn('status', ['getting', 'transit'])
+                ->whereIn('status', OrderStatuses::Getting->getActive())
                 ->lazy()
             : Order::whereBelongsTo($request->user())
                 ->select('status', 'created_at', 'updated_at')
-                ->whereIn('status', ['getting', 'transit'])
+                ->whereIn('status', OrderStatuses::Getting->getActive())
                 ->lazy();
     }
 
