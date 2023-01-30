@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreAddressRequest;
+use App\Http\Requests\UpdateAddressRequest;
 use App\Models\Address;
 use App\Repository\AddressRepository;
 use App\Repository\AddressRepositoryInterface;
+use App\Services\UpdateModelsServices\UpdateAddressService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -12,12 +15,14 @@ class AddressController extends Controller
 {
 
     public function __construct(
-        private readonly AddressRepository $repository
+        private readonly AddressRepository $repository,
+        private UpdateAddressService $service
     ){}
 
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return Response
      */
     public function index(Request $request): Response
@@ -40,12 +45,16 @@ class AddressController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param StoreAddressRequest $request
      * @return Response
      */
-    public function store(Request $request): Response
+    public function store(StoreAddressRequest $request): Response
     {
-        //
+        $address = $this->service->create($request);
+
+        Address::create($address);
+
+        return response('ok',200); //TODO исправить
     }
 
     /**
@@ -75,13 +84,16 @@ class AddressController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param UpdateAddressRequest $request
      * @param Address $address
      * @return Response
      */
-    public function update(Request $request, Address $address): Response
+    public function update(UpdateAddressRequest $request, Address $address): Response
     {
-        //
+        $newAddressData = $this->service->update($request);
+        $address->update($newAddressData);
+
+        return response('oke', 200); //TODO исправить
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,10 +20,10 @@ return new class extends Migration
             $table->timestamps();
             $table->string('status', 10);
             $table->integer('count');
-            $table->foreignId('user_id')->constrained('users')
+            $table->foreignIdFor(User::class)->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->foreignId('product_id')->constrained('products')
+            $table->foreignIdFor(Product::class)->constrained()
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
         });

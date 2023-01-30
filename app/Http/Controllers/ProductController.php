@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Repository\ProductRepository;
+use App\Services\UpdateModelsServices\UpdateProductService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class ProductController extends Controller
 {
     public function __construct(
-        private readonly ProductRepository $repository
+        private readonly ProductRepository $repository,
+        private UpdateProductService $service,
     ){}
     /**
      * Display a listing of the resource.
@@ -29,20 +33,24 @@ class ProductController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create(StoreProductRequest $request)
     {
-        //
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param StoreProductRequest $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        //
+        $product = $this->service->create($request);
+
+        Product::create($product);
+
+        return response('ok',200); //TODO исправить
     }
 
     /**
@@ -74,9 +82,13 @@ class ProductController extends Controller
      * @param Product $product
      * @return Response
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $newProductData = $this->service->update($request);
+
+        $product->update($newProductData);
+
+        return response('ok',200); //TODO исправить
     }
 
     /**
