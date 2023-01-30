@@ -6,9 +6,6 @@ use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\LazyCollection;
 
-/**
- *
- */
 class ProductRepository implements ProductRepositoryInterface
 {
     /**
