@@ -18,7 +18,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('status', 10);
+            $table->string('status', 10)->default('no paid');
             $table->integer('count');
             $table->foreignIdFor(User::class)->constrained()
                 ->cascadeOnUpdate()

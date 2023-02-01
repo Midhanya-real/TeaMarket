@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
-use App\Services\UpdateModelsServices\UpdateOrderService;
+use App\Services\UpdateModelServices\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -13,7 +13,7 @@ class OrderController extends Controller
 {
 
     public function __construct(
-        private UpdateOrderService $service,
+        private OrderService $service,
     )
     {
     }
@@ -46,9 +46,7 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        $order = $this->service->create($request);
-
-        Order::create($order);
+        $order = $this->service->store($request);
 
         return response('ok',200); //TODO исправить
     }
@@ -84,21 +82,8 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        $newOrderData = $this->service->update($request);
-
-        $order->update($newOrderData);
+        $newOrderData = $this->service->update($request, $order);
 
         return response('ok',200); //TODO исправить
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Order $order
-     * @return Response
-     */
-    public function destroy(Order $order)
-    {
-        //
     }
 }
