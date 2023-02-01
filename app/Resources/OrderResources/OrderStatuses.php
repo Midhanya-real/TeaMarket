@@ -8,7 +8,7 @@ enum OrderStatuses: string implements OrderStatusesInterface
     case Transit = 'transit';
     case Paid = 'paid';
 
-    case NoPaid = 'nopaid';
+    case NoPaid = 'no paid';
 
     case Closed = 'closed';
     case Suspend = 'suspend';

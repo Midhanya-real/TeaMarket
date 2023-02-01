@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
-use App\Services\UpdateModelsServices\UpdateCategoryService;
+use App\Repository\CategoryRepository;
+use App\Services\UpdateModelServices\CategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -13,7 +14,8 @@ class CategoryController extends Controller
 {
 
     public function __construct(
-        private UpdateCategoryService $service,
+        private CategoryRepository $repository,
+        private CategoryService $service,
     )
     {
     }
@@ -23,9 +25,11 @@ class CategoryController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(): Response
     {
-        //
+        $categories = $this->repository->getAll();
+
+        return response($categories);
     }
 
     /**
@@ -44,24 +48,11 @@ class CategoryController extends Controller
      * @param StoreCategoryRequest $request
      * @return Response
      */
-    public function store(StoreCategoryRequest $request)
+    public function store(StoreCategoryRequest $request): Response
     {
-        $category = $this->service->create($request);
-
-        Category::create($category);
+        $category = $this->service->store($request);
 
         return response('ok',200); //TODO исправить
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param Category $category
-     * @return Response
-     */
-    public function show(Category $category)
-    {
-        //
     }
 
     /**
@@ -82,11 +73,9 @@ class CategoryController extends Controller
      * @param Category $category
      * @return Response
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category): Response
     {
-        $newCategoryData = $this->service->update($request);
-
-        $category->update($newCategoryData);
+        $newCategoryData = $this->service->update($request, $category);
 
         return response('ok',200); //TODO исправить
     }
@@ -97,8 +86,10 @@ class CategoryController extends Controller
      * @param Category $category
      * @return Response
      */
-    public function destroy(Category $category)
+    public function destroy(Request $request, Category $category): Response
     {
-        //
+        $this->service->destroy($request, $category);
+
+        return response('ok',200); //TODO исправить
     }
 }

@@ -6,8 +6,7 @@ use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
 use App\Models\Address;
 use App\Repository\AddressRepository;
-use App\Repository\AddressRepositoryInterface;
-use App\Services\UpdateModelsServices\UpdateAddressService;
+use App\Services\UpdateModelServices\AddressService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -16,7 +15,7 @@ class AddressController extends Controller
 
     public function __construct(
         private readonly AddressRepository $repository,
-        private UpdateAddressService $service
+        private AddressService $service
     ){}
 
     /**
@@ -50,9 +49,7 @@ class AddressController extends Controller
      */
     public function store(StoreAddressRequest $request): Response
     {
-        $address = $this->service->create($request);
-
-        Address::create($address);
+        $address = $this->service->store($request);
 
         return response('ok',200); //TODO исправить
     }
@@ -90,8 +87,7 @@ class AddressController extends Controller
      */
     public function update(UpdateAddressRequest $request, Address $address): Response
     {
-        $newAddressData = $this->service->update($request);
-        $address->update($newAddressData);
+        $newAddressData = $this->service->update($request, $address);
 
         return response('oke', 200); //TODO исправить
     }
@@ -102,8 +98,10 @@ class AddressController extends Controller
      * @param Address $address
      * @return Response
      */
-    public function destroy(Address $address): Response
+    public function destroy(Request $request, Address $address): Response
     {
-        //
+        $this->service->destroy($request, $address);
+
+        return response('', 200);
     }
 }
