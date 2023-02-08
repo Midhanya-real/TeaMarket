@@ -2,18 +2,35 @@
 
 namespace App\Repository;
 
+use App\Filters\Brand;
+use App\Filters\Country;
+use App\Filters\Price;
+use App\Filters\Type;
+use App\Filters\Weight;
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
+use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\LazyCollection;
 
 class ProductRepository implements ProductRepositoryInterface
 {
     /**
+     * @param Request $request
      * @return LazyCollection
      */
-    public function getAll(): LazyCollection
+    public function getAll(Request $request): LazyCollection
     {
-        return Product::select('name', 'weight', 'price')->lazy();
+        return app(Pipeline::class)
+            ->send(Product::query())
+            ->through([
+                Brand::class,
+                Country::class,
+                Price::class,
+                Type::class,
+                Weight::class,
+            ])
+            ->thenReturn()
+            ->lazy();
     }
 
     /**
@@ -22,7 +39,7 @@ class ProductRepository implements ProductRepositoryInterface
      */
     public function getByName(string $name): LazyCollection // полнотекстовый поиск
     {
-        return Product::select('name', 'weight', 'price')
+        return Product::select('id', 'name', 'weight', 'price')
             ->where('name', $name)->lazy();
     }
 
@@ -33,7 +50,7 @@ class ProductRepository implements ProductRepositoryInterface
      */
     public function getByPrice(int $min, int $max): LazyCollection
     {
-        return Product::select('name', 'weight', 'price')
+        return Product::select('id', 'name', 'weight', 'price')
             ->whereBetween('price', [$min, $max])->lazy();
     }
 
@@ -43,7 +60,7 @@ class ProductRepository implements ProductRepositoryInterface
      */
     public function getByWeight(float $weight): LazyCollection
     {
-        return Product::select('name', 'weight', 'price')
+        return Product::select('id', 'name', 'weight', 'price')
             ->where('weight', $weight)->lazy();
     }
 
@@ -53,7 +70,7 @@ class ProductRepository implements ProductRepositoryInterface
      */
     public function getByBrand(string $brand): LazyCollection
     {
-        return Product::select('name', 'weight', 'price')
+        return Product::select('id', 'name', 'weight', 'price')
             ->where('brand', $brand)->lazy();
     }
 
@@ -63,7 +80,7 @@ class ProductRepository implements ProductRepositoryInterface
      */
     public function getByType(string $type): LazyCollection
     {
-        return Product::select('name', 'weight', 'price')
+        return Product::select('id', 'name', 'weight', 'price')
             ->where('type', $type)->lazy();
     }
 
@@ -73,7 +90,7 @@ class ProductRepository implements ProductRepositoryInterface
      */
     public function getByCountry(string $country): LazyCollection
     {
-        return Product::select('name', 'weight', 'price')
+        return Product::select('id', 'name', 'weight', 'price')
             ->where('country', $country)->lazy();
     }
 }
