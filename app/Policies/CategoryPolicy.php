@@ -11,13 +11,11 @@ class CategoryPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * @param User $user
-     * @return bool
-     */
-    public function before(User $user): bool
+    public function before(User $user)
     {
-        return $user->isAdmin() || $user->isModer();
+        if($user->isAdmin() || $user->isModer()){
+            return true;
+        }
     }
 
     /**
@@ -41,5 +39,64 @@ class CategoryPolicy
     public function view(User $user, Category $category): Response|bool
     {
         return true;
+    }
+
+    /**
+     * Determine whether the user can create models.
+     *
+     * @param User $user
+     * @return Response|bool
+     */
+    public function create(User $user): Response|bool
+    {
+        return $user->isAdmin() || $user->isModer();
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     *
+     * @param User $user
+     * @param Category $category
+     * @return Response|bool
+     */
+    public function update(User $user, Category $category): Response|bool
+    {
+        return $user->isAdmin() || $user->isModer();
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     *
+     * @param User $user
+     * @param Category $category
+     * @return Response|bool
+     */
+    public function delete(User $user, Category $category): Response|bool
+    {
+        return $user->isAdmin() || $user->isModer();
+    }
+
+    /**
+     * Determine whether the user can restore the model.
+     *
+     * @param User $user
+     * @param Category $category
+     * @return Response|bool
+     */
+    public function restore(User $user, Category $category): Response|bool
+    {
+        return $user->isAdmin() || $user->isModer();
+    }
+
+    /**
+     * Determine whether the user can permanently delete the model.
+     *
+     * @param User $user
+     * @param Category $category
+     * @return Response|bool
+     */
+    public function forceDelete(User $user, Category $category): Response|bool
+    {
+        return $user->isAdmin() || $user->isModer();
     }
 }

@@ -12,6 +12,17 @@ class Address extends Model
 
     public $timestamps = false;
 
+    protected $fillable = [
+      'id',
+      'country',
+      'city',
+      'street',
+      'house',
+      'apartment',
+      'postcode',
+      'user_id'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

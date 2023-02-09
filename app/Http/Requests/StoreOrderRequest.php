@@ -16,7 +16,7 @@ class StoreOrderRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->user()->can('store', Order::class);
+        return $this->user()->can('create', Order::class);
     }
 
     /**
@@ -31,8 +31,8 @@ class StoreOrderRequest extends FormRequest
             'count' => ['required', 'integer'],
             'created_at' => ['required', 'date', 'date_format:d-m-Y'],
             'updated_at' => ['required', 'nullable|date', 'date_format:d-m-Y'],
-            'user_id' => ['required', 'exists:App\Model\User,id'],
-            'product_id' => ['required', 'exists:App\Model\Product,id'],
+            'user_id' => ['required', 'exists:App\Models\User,id'],
+            'product_id' => ['required', 'exists:App\Models\Product,id'],
         ];
     }
 }

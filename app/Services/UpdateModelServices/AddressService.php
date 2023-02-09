@@ -20,7 +20,7 @@ class AddressService implements AddressServiceInterface
             'house' => $request->house,
             'apartment' => $request->apartment,
             'postcode' => $request->postcode,
-            'user_id' => $request->user()->id,
+            'user_id' => $request->user_id,
         ]);
     }
 

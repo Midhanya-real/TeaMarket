@@ -14,7 +14,7 @@ class StoreAddressRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can('store', Address::class);
+        return $this->user()->can('create', Address::class);
     }
 
     /**
@@ -31,7 +31,7 @@ class StoreAddressRequest extends FormRequest
             'house' => ['required', 'integer'],
             'apartment' => ['required', 'integer'],
             'postcode' => ['required', 'string', 'max:6'],
-            'user_id' => ['required', 'exists:App\Model\User,id'],
+            'user_id' => ['exists:App\Models\User,id'],
         ];
     }
 }

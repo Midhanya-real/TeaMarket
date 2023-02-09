@@ -14,10 +14,15 @@ class Product extends Model
 
     public $timestamps = false;
 
-    public function scopeFiltered(Builder $query)
-    {
-        //TODO ебани классы фильтров
-    }
+    protected $fillable = [
+        'name',
+        'weight',
+        'price',
+        'category_id',
+        'type_id',
+        'brand_id',
+        'country_id'
+    ];
 
     public function order(): HasOne
     {
@@ -27,5 +32,20 @@ class Product extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function type(): BelongsTo
+    {
+        return $this->belongsTo(Type::class);
+    }
+
+    public function brand(): BelongsTo
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
     }
 }

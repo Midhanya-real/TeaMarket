@@ -14,7 +14,7 @@ class UpdateProductRequest extends FormRequest
      */
     public function authorize()
     {
-        $product = Category::find($this->route('product'));
+        $product = $this->route('product');
 
         return $this->user()->can('update', $product);
     }

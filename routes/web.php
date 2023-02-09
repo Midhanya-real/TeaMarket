@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FilterController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -19,12 +20,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    return redirect('products');
+})->name('homePage');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -43,13 +40,13 @@ Route::middleware('auth')->group(function () {
 
 
 Route::controller(ProductController::class)->group(function () {
-    Route::get('/products', 'index');
-    Route::get('/products/{product}', 'show');
+    Route::get('/products', 'index')->name('products.index');
+    Route::get('/products/{product}', 'show')->name('products.show');
 });
 
 Route::controller(CategoryController::class)->group(function () {
     Route::get('/categories', 'index');
-    Route::get('/categories/{category}', 'show');
 });
+
 
 require __DIR__ . '/auth.php';

@@ -14,7 +14,7 @@ class UpdateAddressRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $address = Address::find($this->route('addresses'));
+        $address = $this->route('address');
 
         return $this->user()->can('update', $address);
     }
