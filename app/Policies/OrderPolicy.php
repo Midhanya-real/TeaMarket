@@ -11,14 +11,11 @@ class OrderPolicy
 {
     use HandlesAuthorization;
 
-
-    /**
-     * @param User $user
-     * @return bool
-     */
-    public function before(User $user): bool
+    public function before(User $user)
     {
-        return $user->isAdmin() || $user->isModer();
+        if($user->isAdmin() || $user->isModer()){
+            return true;
+        }
     }
 
     /**

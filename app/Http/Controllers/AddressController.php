@@ -7,62 +7,73 @@ use App\Http\Requests\UpdateAddressRequest;
 use App\Models\Address;
 use App\Repository\AddressRepository;
 use App\Services\UpdateModelServices\AddressService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class AddressController extends Controller
 {
 
     public function __construct(
         private readonly AddressRepository $repository,
-        private AddressService $service
-    ){}
+        private AddressService             $service
+    )
+    {
+    }
 
     /**
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return Response
+     * @return View
      */
-    public function index(Request $request): Response
+    public function index(Request $request): View
     {
         $addresses = $this->repository->getAll($request);
 
-        return response($addresses);
+        return view('addresses.addresses', ['addresses' => $addresses]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
-    public function create(): Response
+    public function create(): View
     {
-        //
+        return view('addresses.partials.create-address-form', ['user_id' => Auth::user()->id]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param StoreAddressRequest $request
-     * @return Response
+     * @return RedirectResponse
      */
-    public function store(StoreAddressRequest $request): Response
+    public function store(StoreAddressRequest $request): RedirectResponse
     {
-        $address = $this->service->store($request);
+        if($request->missing('user_id'))
+        {
+            $request->merge(['user_id' => $request->user()->id]);
+        }
 
-        return response('ok',200); //TODO исправить
+        $this->service->store($request);
+
+        return redirect()->route('addresses.index');
     }
 
     /**
      * Display the specified resource.
      *
+     * @param Request $request
      * @param Address $address
      * @return Response
      */
     public function show(Request $request, Address $address): Response
     {
-        $userAddress = $this->repository->getById($request, $address);
+        $userAddress = $this->repository->getById(request: $request, address: $address);
 
         return response($userAddress);
     }
@@ -71,11 +82,11 @@ class AddressController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Address $address
-     * @return Response
+     * @return View
      */
-    public function edit(Address $address): Response
+    public function edit(Address $address): View
     {
-        //
+        return view('addresses.partials.update-address-form', ['address' => $address]);
     }
 
     /**
@@ -83,13 +94,14 @@ class AddressController extends Controller
      *
      * @param UpdateAddressRequest $request
      * @param Address $address
-     * @return Response
+     * @return RedirectResponse
      */
-    public function update(UpdateAddressRequest $request, Address $address): Response
+    public function update(UpdateAddressRequest $request, Address $address): RedirectResponse
     {
-        $newAddressData = $this->service->update($request, $address);
+        $this->service->update($request, $address);
 
-        return response('oke', 200); //TODO исправить
+
+        return redirect()->route('addresses.index');
     }
 
     /**

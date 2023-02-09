@@ -16,7 +16,7 @@ class UpdateOrderRequest extends FormRequest
      */
     public function authorize()
     {
-        $order = Order::find($this->route('orders'));
+        $order = $this->route('order');
 
         return $this->user()->can('update', $order);
     }

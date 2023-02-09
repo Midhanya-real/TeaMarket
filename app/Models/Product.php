@@ -24,11 +24,6 @@ class Product extends Model
         'country_id'
     ];
 
-    public function scopeFiltered(Builder $query)
-    {
-        //TODO ебани классы фильтров
-    }
-
     public function order(): HasOne
     {
         return $this->hasOne(Order::class);
