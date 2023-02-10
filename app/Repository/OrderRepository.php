@@ -16,8 +16,8 @@ class OrderRepository implements OrderRepositoryInterface
     public function getAll(Request $request): LazyCollection
     {
         return $request->user()->can('viewAny')
-            ? Order::select('status', 'created_at', 'updated_at')->lazy()
-            : Order::whereBelongsTo($request->user())->select('status', 'created_at', 'updated_at')->lazy();
+            ? Order::lazy()
+            : Order::whereBelongsTo($request->user())->lazy();
     }
 
     /**
@@ -27,11 +27,9 @@ class OrderRepository implements OrderRepositoryInterface
     public function getActive(Request $request): LazyCollection
     {
         return $request->user()->can('viewAny')
-            ? Order::select('status', 'created_at', 'updated_at')
-                ->whereIn('status', OrderStatuses::Getting->getActive())
+            ? Order::whereIn('status', OrderStatuses::Getting->getActive())
                 ->lazy()
             : Order::whereBelongsTo($request->user())
-                ->select('status', 'created_at', 'updated_at')
                 ->whereIn('status', OrderStatuses::Getting->getActive())
                 ->lazy();
     }
@@ -39,7 +37,7 @@ class OrderRepository implements OrderRepositoryInterface
     public function getById(Request $request, Order $order): Order|array
     {
         return $request->user()->can('view', $order)
-            ? $order->select('status', 'created_at', 'updated_at')->first()
+            ? $order
             : [];
     }
 }

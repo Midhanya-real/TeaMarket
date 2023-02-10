@@ -19,9 +19,7 @@ class AddressController extends Controller
     public function __construct(
         private readonly AddressRepository $repository,
         private AddressService             $service
-    )
-    {
-    }
+    ){}
 
     /**
      * Display a listing of the resource.
@@ -62,20 +60,6 @@ class AddressController extends Controller
         $this->service->store($request);
 
         return redirect()->route('addresses.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param Request $request
-     * @param Address $address
-     * @return Response
-     */
-    public function show(Request $request, Address $address): Response
-    {
-        $userAddress = $this->repository->getById(request: $request, address: $address);
-
-        return response($userAddress);
     }
 
     /**
