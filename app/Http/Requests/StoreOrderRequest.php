@@ -29,8 +29,8 @@ class StoreOrderRequest extends FormRequest
         return [
             'status' => ['required', new Enum(OrderStatuses::class)],
             'count' => ['required', 'integer'],
-            'created_at' => ['required', 'date', 'date_format:d-m-Y'],
-            'updated_at' => ['required', 'nullable|date', 'date_format:d-m-Y'],
+            'created_at' => ['required', 'date', 'date_format:d-m-Y H:i:s'],
+            'updated_at' => ['required', 'nullable|date', 'date_format:d-m-Y H:i:s'],
             'user_id' => ['required', 'exists:App\Models\User,id'],
             'product_id' => ['required', 'exists:App\Models\Product,id'],
         ];

@@ -5,15 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
+use App\Repository\OrderRepository;
 use App\Services\UpdateModelServices\OrderService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class OrderController extends Controller
 {
 
     public function __construct(
         private OrderService $service,
+        private OrderRepository $repository,
     )
     {
     }
@@ -21,45 +25,27 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @param Request $request
+     * @return View
      */
-    public function index()
+    public function index(Request $request): View
     {
-        //
-    }
+        $orders = $this->repository->getAll($request);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create(StoreOrderRequest $request)
-    {
-
+        return view('orders.orders', ['orders' => $orders]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param StoreOrderRequest $request
-     * @return Response
+     * @return RedirectResponse
      */
-    public function store(StoreOrderRequest $request)
+    public function store(StoreOrderRequest $request): RedirectResponse
     {
-        $order = $this->service->store($request);
+        $this->service->store($request);
 
-        return response('ok',200); //TODO исправить
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param Order $order
-     * @return Response
-     */
-    public function show(Order $order)
-    {
-        //
+        return redirect()->route('orders.index');
     }
 
     /**
@@ -82,7 +68,7 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        $newOrderData = $this->service->update($request, $order);
+        $this->service->update($request, $order);
 
         return response('ok',200); //TODO исправить
     }
