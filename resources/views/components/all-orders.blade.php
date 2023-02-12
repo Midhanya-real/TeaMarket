@@ -28,14 +28,29 @@
                 {{$order->created_at}}
             </p>
 
-            <button type="submit"
-                    class=" inline-block px-6 py-2.5 bg-blue-600 text-black font-black text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                <a href="{{route('addresses.update', $order)}}">
-                    {{__('Cancel')}}
-                </a>
-            </button>
+            <form action="{{route('orders.update', $order)}}" method="POST">
+                @csrf
+                @method('patch')
+                @if($order->status != \App\Resources\OrderResources\OrderStatuses::Canceled)
+                    <input type="hidden" value="canceled" name="status">
 
-            @if($order->status === \App\Resources\OrderResources\OrderStatuses::NoPaid)  <!--Поправить адрес-->
+                    <button type="submit"
+                            class=" inline-block px-6 py-2.5 bg-blue-600 text-black font-black text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                        {{__('Cancel')}}
+                    </button>
+
+                @else
+                    <input type="hidden" value="no paid" name="status">
+
+                    <button type="submit"
+                            class=" inline-block px-6 py-2.5 bg-blue-600 text-black font-black text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                        {{__('restate')}}
+                    </button>
+                @endif
+            </form>
+
+            @if($order->status === \App\Resources\OrderResources\OrderStatuses::NoPaid)
+                <!--Поправить адрес-->
                 <button type="submit"
                         class=" inline-block px-6 py-2.5 bg-blue-600 text-black font-black text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
                     <a href="{{route('orders.destroy', $order)}}">

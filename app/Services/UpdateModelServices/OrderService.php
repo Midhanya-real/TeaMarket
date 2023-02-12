@@ -28,7 +28,7 @@ class OrderService implements OrderServiceInterface
     {
         return $order->update([
             'status' => $request->status,
-            'updated_at' => $request->updated_at,
+            'updated_at' => now()->format('d-m-Y H:i:s'),
         ]);
     }
 }

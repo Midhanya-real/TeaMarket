@@ -68,12 +68,12 @@ class OrderController extends Controller
      *
      * @param UpdateOrderRequest $request
      * @param Order $order
-     * @return Response
+     * @return RedirectResponse
      */
-    public function update(UpdateOrderRequest $request, Order $order)
+    public function update(UpdateOrderRequest $request, Order $order): RedirectResponse
     {
         $this->service->update($request, $order);
 
-        return response('ok',200); //TODO исправить
+        return redirect()->route('orders.index');
     }
 }
