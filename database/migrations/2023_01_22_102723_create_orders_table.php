@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->enum('status', ['getting', 'transit', 'paid', 'no paid', 'closed', 'suspend', 'canceled']);
-            $table->integer('count');
+            $table->integer('count')->default(1);
             $table->foreignIdFor(User::class)->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();

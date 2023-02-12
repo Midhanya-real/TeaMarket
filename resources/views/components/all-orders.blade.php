@@ -3,7 +3,7 @@
     @foreach($orders as $order)
         <div class="block p-6 rounded-lg shadow-lg bg-white max-w-xl">
             <a class="text-gray-900 text-xl leading-tight font-medium mb-2"
-               href="{{route('orders.show', $order)}}">{{$order->id}}</a>
+               href="{{route('orders.show', $order)}}">{{__('Order number: #')}}{{$order->id}}</a>
             <p class="text-gray-700 text-base mb-4">
                 {{__('product:')}}
                 {{$order->product->name}}
@@ -12,12 +12,18 @@
                 {{__('status:')}}
                 {{$order->status}}
             </p>
+
+            <p class="text-gray-700 text-base mb-4">
+                {{__('price:')}}
+                {{$order->product->price * $order->count}}
+            </p>
+
             <p class="text-gray-700 text-base mb-4">
                 {{__('count:')}}
                 {{$order->count}}
             </p>
 
-            <p class="text-gray-700 text-base mb-4" type="date">
+            <p class="text-gray-700 text-base mb-4" type="date d-m-Y">
                 {{__('created at:')}}
                 {{$order->created_at}}
             </p>

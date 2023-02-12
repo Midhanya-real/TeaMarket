@@ -30,7 +30,6 @@ class UpdateOrderRequest extends FormRequest
     {
         return [
             'status' => ['required', new Enum(OrderStatuses::class)],
-            'updated_at' => ['required', 'date', 'date_format:d-m-Y'],
         ];
     }
 }

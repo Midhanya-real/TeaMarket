@@ -59,7 +59,7 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        $product = $this->service->store($request);
+        $this->service->store($request);
 
         return response('ok', 200); //TODO исправить
     }
