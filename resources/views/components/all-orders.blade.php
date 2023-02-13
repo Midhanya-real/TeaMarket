@@ -38,25 +38,24 @@
                             class=" inline-block px-6 py-2.5 bg-blue-600 text-black font-black text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
                         {{__('Cancel')}}
                     </button>
-
-                @else
-                    <input type="hidden" value="no paid" name="status">
-
-                    <button type="submit"
-                            class=" inline-block px-6 py-2.5 bg-blue-600 text-black font-black text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                        {{__('restate')}}
-                    </button>
                 @endif
             </form>
 
             @if($order->status === \App\Resources\OrderResources\OrderStatuses::NoPaid)
-                <!--Поправить адрес-->
-                <button type="submit"
-                        class=" inline-block px-6 py-2.5 bg-blue-600 text-black font-black text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                    <a href="{{route('orders.destroy', $order)}}">
-                        {{__('To pay')}}
-                    </a>
-                </button>
+                <form method="POST" action="{{route('payments.create')}}">
+                    @csrf
+                    <input type="hidden" value="{{$order->id}}" name="id">
+                    <input type="hidden" value="{{$order->product->name}}" name="product">
+                    <input type="hidden" value="{{$order->product->price * $order->count}}" name="price">
+                    <input type="hidden" value="{{$order->count}}" name="count">
+                    <input type="hidden" value="redirect" name="type">
+                    <input type="hidden" value="http://localhost:81/orders" name="url">
+
+                    <button type="submit"
+                            class=" inline-block px-6 py-2.5 bg-blue-600 text-black font-black text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                        {{__('Buy')}}
+                    </button>
+                </form>
             @endif
 
             @if(Auth::user()->isAdmin() || Auth::user()->isModer())
