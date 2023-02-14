@@ -29,6 +29,11 @@ class Product extends Model
         return $this->hasOne(Order::class);
     }
 
+    public function history(): HasOne
+    {
+        return $this->hasOne(OrderHistory::class);
+    }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);

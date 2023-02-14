@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderHistoryController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -34,7 +35,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('orders', OrderController::class);
-    Route::post('/payments', [PaymentController::class, 'create'])->name('payments.create');
+
+    Route::controller(OrderHistoryController::class)->group(function (){
+        Route::get('/history', 'index')->name('history.index');
+        Route::post('/history/{order}', 'cancel')->name('history.cancel');
+        Route::post('/history', 'store')->name('history.store');
+    });
 });
 
 

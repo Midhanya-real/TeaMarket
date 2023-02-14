@@ -66,6 +66,11 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
+    public function history(): HasMany
+    {
+        return $this->hasMany(OrderHistory::class);
+    }
+
     public function isAdmin(): bool
     {
         return $this->roles()->where('name', 'admin')->exists();

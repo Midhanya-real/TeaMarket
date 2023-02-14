@@ -16,10 +16,6 @@ class UserObserver
      */
     public function created(User $user)
     {
-        Card::create([
-            'user_id' => $user->id,
-        ]);
-
         RoleUser::create([
             'user_id' => $user->id,
             'role_id' => 3,

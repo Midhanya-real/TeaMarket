@@ -3,27 +3,32 @@
 namespace App\Models;
 
 use App\Resources\OrderResources\OrderHistoryStatuses;
-use App\Resources\OrderResources\OrderStatuses;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Order extends Model
+class OrderHistory extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'created_at',
-        'updated_at',
-        'status',
-        'count',
-        'user_id',
-        'product_id',
-        'payment_id'
-    ];
+    protected $table = 'orders_history';
+    protected $primaryKey = 'payment_id';
+
+    public $incrementing = false;
+
+    public $timestamps = false;
 
     protected $casts = [
-        'status' => OrderStatuses::class,
+        'status' => OrderHistoryStatuses::class,
+    ];
+
+    protected $fillable = [
+        'payment_id',
+        'price',
+        'status',
+        'product_id',
+        'user_id',
     ];
 
     public function user(): BelongsTo

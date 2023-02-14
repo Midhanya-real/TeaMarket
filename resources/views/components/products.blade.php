@@ -26,6 +26,7 @@
                     </form>
                 </div>
             </div>
+            <div class="block p-6 rounded-lg max-w-xl inline-flex"></div>
         @endforeach
     </div>
 </section>

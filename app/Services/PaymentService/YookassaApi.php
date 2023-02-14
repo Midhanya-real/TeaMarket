@@ -15,8 +15,6 @@ class YookassaApi
         private Client $client,
     )
     {
-        $this->config = config('payment.yookassa');
-        $this->client = new Client();
         $this->client->setAuth($this->config['market_id'], $this->config['secret_key']);
     }
 
@@ -33,5 +31,10 @@ class YookassaApi
     public function cancelPayment(string $paymentId): CancelResponse
     {
         return $this->client->cancelPayment($paymentId, uniqid('', true));
+    }
+
+    public function getPayments()
+    {
+        return $this->client->getPayments();
     }
 }

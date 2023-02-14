@@ -45,6 +45,7 @@
                 </a>
             </button>
         </div>
+        <div class="block p-6 rounded-lg max-w-xl"></div>
     @endforeach
 </div>
 

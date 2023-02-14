@@ -3,8 +3,11 @@
 namespace App\Services\PaymentService;
 
 use App\Actions\Payments\PaymentBodyParser;
+use App\Models\OrderHistory;
 use App\Services\PaymentService\PaymentBuilder\PaymentBodyBuilder;
 use Illuminate\Http\Request;
+use YooKassa\Request\Payments\CreatePaymentResponse;
+use YooKassa\Request\Payments\Payment\CancelResponse;
 
 class PayService
 {
@@ -16,7 +19,7 @@ class PayService
     {
     }
 
-    public function create(Request $order)
+    public function create(Request $order): CreatePaymentResponse
     {
         $body = $this->paymentBodyBuilder
             ->amount(price: $order->price, currency: 'RUB')
@@ -26,5 +29,10 @@ class PayService
             ->getBody();
 
         return $this->payment->createPayment($body);
+    }
+
+    public function cancel(OrderHistory $order): CancelResponse
+    {
+        return $this->payment->cancelPayment($order->payment_id);
     }
 }

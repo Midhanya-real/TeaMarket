@@ -7,7 +7,7 @@ use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
 use App\Models\Product;
 use App\Repository\OrderRepository;
-use App\Resources\OrderResources\OrderStatuses;
+use App\Resources\OrderResources\OrderHistoryStatuses;
 use App\Services\UpdateModelServices\OrderService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -73,6 +73,20 @@ class OrderController extends Controller
     public function update(UpdateOrderRequest $request, Order $order): RedirectResponse
     {
         $this->service->update($request, $order);
+
+        return redirect()->route('orders.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param Request $request
+     * @param Order $order
+     * @return RedirectResponse
+     */
+    public function destroy(Request $request, Order $order): RedirectResponse
+    {
+        $this->service->destroy($order);
 
         return redirect()->route('orders.index');
     }

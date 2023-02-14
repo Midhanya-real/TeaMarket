@@ -5,9 +5,8 @@ namespace App\Services\UpdateModelServices;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
-use App\Models\Product;
-use App\Resources\OrderResources\OrderStatuses;
 use App\Services\UpdateModelServices\Interfaces\OrderServiceInterface;
+use Carbon\Carbon;
 
 class OrderService implements OrderServiceInterface
 {
@@ -17,8 +16,8 @@ class OrderService implements OrderServiceInterface
         return Order::create([
             'status' => $request->status,
             'count' => $request->count,
-            'created_at' => now()->format('d-m-Y H:i:s'),
-            'updated_at' => now()->format('d-m-Y H:i:s'),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
             'user_id' => $request->user()->id,
             'product_id' => $request->product_id,
         ]);
@@ -28,7 +27,12 @@ class OrderService implements OrderServiceInterface
     {
         return $order->update([
             'status' => $request->status,
-            'updated_at' => now()->format('d-m-Y H:i:s'),
+            'updated_at' => now(),
         ]);
+    }
+
+    public function destroy(Order $order)
+    {
+        return $order->delete();
     }
 }

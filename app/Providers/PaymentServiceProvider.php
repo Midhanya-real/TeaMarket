@@ -3,8 +3,9 @@
 namespace App\Providers;
 
 use App\Services\PaymentService\YookassaApi;
+
 use Illuminate\Support\ServiceProvider;
-use YooKassa\Model\Payment;
+use YooKassa\Client;
 
 class PaymentServiceProvider extends ServiceProvider
 {
@@ -15,7 +16,9 @@ class PaymentServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(YookassaApi::class);
+        $this->app->singleton(YookassaApi::class, function ($app) {
+            return new YookassaApi(config('payment.yookassa'), $app->make(Client::class));
+        });
     }
 
     public function provides()
