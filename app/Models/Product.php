@@ -31,7 +31,7 @@ class Product extends Model
 
     public function history(): HasOne
     {
-        return $this->hasOne(OrderHistory::class);
+        return $this->hasOne(History::class);
     }
 
     public function category(): BelongsTo

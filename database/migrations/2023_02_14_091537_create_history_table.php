@@ -15,10 +15,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('orders_history', function (Blueprint $table) {
+        Schema::create('histories', function (Blueprint $table) {
             $table->uuid('payment_id')->primary();
             $table->decimal('price', 19, 2);
-            $table->enum('status', ['pending', 'waiting_for_capture', 'succeeded', 'canceled']);
+            $table->enum('status', ['pending', 'waiting_for_capture', 'succeeded', 'canceled', 'refunded']);
             $table->foreignIdFor(Product::class)->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders_history');
+        Schema::dropIfExists('history');
     }
 };

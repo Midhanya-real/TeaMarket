@@ -3,11 +3,13 @@
 namespace App\Services\PaymentService;
 
 use App\Actions\Payments\PaymentBodyParser;
-use App\Models\OrderHistory;
+use App\Models\History;
 use App\Services\PaymentService\PaymentBuilder\PaymentBodyBuilder;
 use Illuminate\Http\Request;
 use YooKassa\Request\Payments\CreatePaymentResponse;
 use YooKassa\Request\Payments\Payment\CancelResponse;
+use YooKassa\Request\Payments\Payment\CreateCaptureResponse;
+use YooKassa\Request\Refunds\CreateRefundResponse;
 
 class PayService
 {
@@ -31,8 +33,27 @@ class PayService
         return $this->payment->createPayment($body);
     }
 
-    public function cancel(OrderHistory $order): CancelResponse
+    public function cancel(History $order): CancelResponse
     {
         return $this->payment->cancelPayment($order->payment_id);
+    }
+
+    public function capture(History $order): CreateCaptureResponse
+    {
+        $amount = $this->payment->getPaymentInfo($order->payment_id)->amount;
+
+        return $this->payment->capturePayment($order->payment_id, [$amount]);
+    }
+
+    public function refund(History $order): CreateRefundResponse
+    {
+        $amount = $this->payment->getPaymentInfo($order->payment_id)->amount;
+
+        $paymentData = [
+            'amount' => $amount,
+            'payment_id' => $order->payment_id
+        ];
+
+        return $this->payment->createRefund($paymentData);
     }
 }

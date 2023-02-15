@@ -17,15 +17,21 @@
                     </x-nav-link>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')">
-                        {{ __('Orders') }}
-                    </x-nav-link>
-                </div>
+                @if(!(Auth::user()->isAdmin() || Auth::user()->isModer()))
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')">
+                            {{ __('Orders') }}
+                        </x-nav-link>
+                    </div>
+                @endif
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('history.index')" :active="request()->routeIs('history.index')">
-                        {{ __('History') }}
+                        @if(Auth::user()->isAdmin() || Auth::user()->isModer())
+                            {{ __('Orders') }}
+                        @else
+                            {{ __('History') }}
+                        @endif
                     </x-nav-link>
                 </div>
             </div>

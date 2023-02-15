@@ -9,6 +9,8 @@ enum OrderHistoryStatuses: string implements OrderStatusesInterface
     case Succeeded = 'succeeded';
     case Canceled = 'canceled';
 
+    case Refunded = 'refunded';
+
     public function getActive(): array
     {
         return [
@@ -22,6 +24,7 @@ enum OrderHistoryStatuses: string implements OrderStatusesInterface
         return [
             OrderHistoryStatuses::Succeeded->value,
             OrderHistoryStatuses::Canceled->value,
+            OrderHistoryStatuses::Refunded->value,
         ];
     }
 }

@@ -14,16 +14,37 @@
                 {{$order->price}}
             </p>
 
-            <form method="POST" action="{{route('history.cancel', $order)}}">
-                @csrf
-                @if($order->status != \App\Resources\OrderResources\OrderHistoryStatuses::Canceled)
+            @if($order->status != \App\Resources\OrderResources\OrderHistoryStatuses::Canceled && $order->status != \App\Resources\OrderResources\OrderHistoryStatuses::Succeeded && $order->status != \App\Resources\OrderResources\OrderHistoryStatuses::Refunded)
+                <form method="POST" action="{{route('history.cancel', $order)}}">
+                    @csrf
                     <button type="submit"
                             class=" inline-block px-6 py-2.5 bg-blue-600 text-black font-black text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
                         {{__('Cancel')}}
                     </button>
+                </form>
+
+                @if(Auth::user()->isAdmin() || Auth::user()->isModer())
+                    <form method="POST" action="{{route('history.capture', $order)}}">
+                        @csrf
+                        <button type="submit"
+                                class=" inline-block px-6 py-2.5 bg-blue-600 text-black font-black text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                            {{__('Capture')}}
+                        </button>
+                    </form>
                 @endif
+            @endif
+
+            <form method="POST" action="{{route('history.refund', $order)}}">
+                @csrf
+                @if($order->status == \App\Resources\OrderResources\OrderHistoryStatuses::Succeeded)
+                    <button type="submit"
+                            class=" inline-block px-6 py-2.5 bg-blue-600 text-black font-black text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                        {{__('Refund')}}
+                    </button>
+                @endif
+
+            </form>
         </div>
-        </form>
 
         <div class="block p-6 rounded-lg max-w-xl"></div>
     @endforeach

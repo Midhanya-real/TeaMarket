@@ -2,13 +2,16 @@
 
 namespace App\Repository;
 
-use App\Models\OrderHistory;
+use App\Models\History;
+use Illuminate\Http\Request;
 use Illuminate\Support\LazyCollection;
 
 class OrderHistoryRepository
 {
-    public function index(): LazyCollection
+    public function index(Request $request): LazyCollection
     {
-        return OrderHistory::lazy();
+        return $request->user()->can('viewAny', History::class)
+            ? History::lazy()
+            : History::whereBelongsTo($request->user())->lazy();
     }
 }

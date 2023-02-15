@@ -2,18 +2,18 @@
 
 namespace App\Policies;
 
-use App\Models\Address;
+use App\Models\History;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-class AddressPolicy
+class HistoryPolicy
 {
     use HandlesAuthorization;
 
     public function before(User $user)
     {
-        if($user->isAdmin() || $user->isModer()){
+        if ($user->isAdmin() || $user->isModer()) {
             return true;
         }
     }
@@ -26,19 +26,19 @@ class AddressPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->isAdmin() || $user->isModer();
+        $user->isAdmin() || $user->isModer();
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param User $user
-     * @param \App\Models\Address $address
+     * @param History $orderHistory
      * @return Response|bool
      */
-    public function view(User $user, Address $address)
+    public function view(User $user, History $orderHistory)
     {
-        return $user->id === $address->user_id;
+        return $user->id === $orderHistory->user_id;
     }
 
     /**
@@ -56,47 +56,47 @@ class AddressPolicy
      * Determine whether the user can update the model.
      *
      * @param User $user
-     * @param \App\Models\Address $address
+     * @param History $orderHistory
      * @return Response|bool
      */
-    public function update(User $user, Address $address)
+    public function update(User $user, History $orderHistory)
     {
-        return $user->id === $address->user_id;
+        return true;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param User $user
-     * @param \App\Models\Address $address
+     * @param History $orderHistory
      * @return Response|bool
      */
-    public function delete(User $user, Address $address)
+    public function delete(User $user, History $orderHistory)
     {
-        return $user->id === $address->user_id;
+        return false;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param User $user
-     * @param \App\Models\Address $address
+     * @param History $orderHistory
      * @return Response|bool
      */
-    public function restore(User $user, Address $address)
+    public function restore(User $user, History $orderHistory)
     {
-        return $user->id === $address->user_id;
+        return false;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param User $user
-     * @param \App\Models\Address $address
+     * @param History $orderHistory
      * @return Response|bool
      */
-    public function forceDelete(User $user, Address $address)
+    public function forceDelete(User $user, History $orderHistory)
     {
-        return $user->id === $address->user_id;
+        return false;
     }
 }
