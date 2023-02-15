@@ -51,11 +51,6 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
-    public function card(): HasOne
-    {
-        return $this->hasOne(User::class);
-    }
-
     public function addresses(): HasMany
     {
         return $this->hasMany(Address::class);
