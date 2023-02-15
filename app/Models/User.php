@@ -51,11 +51,6 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
-    public function card(): HasOne
-    {
-        return $this->hasOne(User::class);
-    }
-
     public function addresses(): HasMany
     {
         return $this->hasMany(Address::class);
@@ -70,7 +65,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(History::class);
     }
-
+    
     public function isAdmin(): bool
     {
         return $this->roles()->where('name', 'admin')->exists();
