@@ -52,11 +52,6 @@ class AddressController extends Controller
      */
     public function store(StoreAddressRequest $request): RedirectResponse
     {
-        if($request->missing('user_id'))
-        {
-            $request->merge(['user_id' => $request->user()->id]);
-        }
-
         $this->service->store($request);
 
         return redirect()->route('addresses.index');

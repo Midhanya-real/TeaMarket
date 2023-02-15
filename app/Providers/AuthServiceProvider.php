@@ -6,9 +6,11 @@ namespace App\Providers;
 use App\Models\Address;
 use App\Models\Category;
 use App\Models\Order;
+use App\Models\History;
 use App\Models\Product;
 use App\Policies\AddressPolicy;
 use App\Policies\CategoryPolicy;
+use App\Policies\HistoryPolicy;
 use App\Policies\OrderPolicy;
 use App\Policies\ProductPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -25,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         Product::class => ProductPolicy::class,
         Category::class => CategoryPolicy::class,
         Address::class => AddressPolicy::class,
+        History::class => HistoryPolicy::class,
     ];
 
     /**

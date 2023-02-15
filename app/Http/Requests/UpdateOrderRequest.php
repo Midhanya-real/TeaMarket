@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Order;
-use App\Resources\OrderResources\OrderStatuses;
+use App\Resources\OrderResources\OrderHistoryStatuses;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 
@@ -29,8 +29,7 @@ class UpdateOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'status' => ['required', new Enum(OrderStatuses::class)],
-            'updated_at' => ['required', 'date', 'date_format:d-m-Y'],
+            'status' => ['required', new Enum(OrderHistoryStatuses::class)],
         ];
     }
 }

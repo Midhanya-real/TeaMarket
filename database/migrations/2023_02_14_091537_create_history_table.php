@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,9 +15,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cards', function (Blueprint $table) {
-            $table->id();
-            $table->decimal('balance', 19, 2)->default(0.00);
+        Schema::create('histories', function (Blueprint $table) {
+            $table->uuid('payment_id')->primary();
+            $table->decimal('price', 19, 2);
+            $table->enum('status', ['pending', 'waiting_for_capture', 'succeeded', 'canceled', 'refunded']);
+            $table->foreignIdFor(Product::class)->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table->foreignIdFor(User::class)->constrained()
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
@@ -30,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cards');
+        Schema::dropIfExists('history');
     }
 };

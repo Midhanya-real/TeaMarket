@@ -18,8 +18,8 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->enum('status', ['getting', 'transit', 'paid', 'no paid', 'closed', 'suspend', 'canceled']);
-            $table->integer('count');
+            $table->string('status')->default('no paid');
+            $table->integer('count')->default(1);
             $table->foreignIdFor(User::class)->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();

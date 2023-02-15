@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Order;
-use App\Resources\OrderResources\OrderStatuses;
+use App\Resources\OrderResources\OrderHistoryStatuses;
 use Illuminate\Http\Request;
 use Illuminate\Support\LazyCollection;
 
@@ -27,10 +27,10 @@ class OrderRepository implements OrderRepositoryInterface
     public function getActive(Request $request): LazyCollection
     {
         return $request->user()->can('viewAny')
-            ? Order::whereIn('status', OrderStatuses::Getting->getActive())
+            ? Order::whereIn('status', OrderHistoryStatuses::Getting->getActive())
                 ->lazy()
             : Order::whereBelongsTo($request->user())
-                ->whereIn('status', OrderStatuses::Getting->getActive())
+                ->whereIn('status', OrderHistoryStatuses::Getting->getActive())
                 ->lazy();
     }
 

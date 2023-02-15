@@ -52,6 +52,8 @@
                             <x-text-input id="user_id" name="user_id" type="text" class="mt-1 block"
                                           autocomplete="new-password"/>
                         </div>
+                    @else
+                        <input type="hidden" value="{{Auth::user()->id}}" name="user_id">
                     @endif
 
 

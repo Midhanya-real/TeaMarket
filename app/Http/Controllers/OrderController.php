@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
+use App\Models\Product;
 use App\Repository\OrderRepository;
+use App\Resources\OrderResources\OrderHistoryStatuses;
 use App\Services\UpdateModelServices\OrderService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
 
 class OrderController extends Controller
@@ -39,6 +42,7 @@ class OrderController extends Controller
      * Store a newly created resource in storage.
      *
      * @param StoreOrderRequest $request
+     * @param Product $product
      * @return RedirectResponse
      */
     public function store(StoreOrderRequest $request): RedirectResponse
@@ -64,12 +68,26 @@ class OrderController extends Controller
      *
      * @param UpdateOrderRequest $request
      * @param Order $order
-     * @return Response
+     * @return RedirectResponse
      */
-    public function update(UpdateOrderRequest $request, Order $order)
+    public function update(UpdateOrderRequest $request, Order $order): RedirectResponse
     {
         $this->service->update($request, $order);
 
-        return response('ok',200); //TODO исправить
+        return redirect()->route('orders.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param Request $request
+     * @param Order $order
+     * @return RedirectResponse
+     */
+    public function destroy(Request $request, Order $order): RedirectResponse
+    {
+        $this->service->destroy($order);
+
+        return redirect()->route('orders.index');
     }
 }
