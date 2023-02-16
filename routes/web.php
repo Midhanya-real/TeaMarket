@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\historyController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -30,31 +30,24 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::resource('addresses', AddressController::class);
-    Route::resource('products', ProductController::class);
-    Route::resource('categories', CategoryController::class);
     Route::resource('orders', OrderController::class);
 
-    Route::controller(historyController::class)->group(function (){
+    Route::controller(HistoryController::class)->group(function () {
         Route::get('/history', 'index')->name('history.index');
         Route::post('/history', 'store')->name('history.store');
         Route::post('/history/{order}/cancel', 'cancel')->name('history.cancel');
-        Route::post('/history/{order}/capture', 'capture')->name('history.capture');
         Route::post('/history/{order}/refund', 'refund')->name('history.refund');
-        Route::get('/test', 'test')->name('test.action');
     });
 });
 
-
-Route::controller(ProductController::class)->group(function () {
-    Route::get('/products', 'index')->name('products.index');
-    Route::get('/products/{product}', 'show')->name('products.show');
+Route::middleware(['admin', 'moder'])->group(function () {
+    Route::resource('categories', CategoryController::class);
+    Route::post('/history/{order}/capture', [HistoryController::class, 'capture'])->name('history.capture');
 });
 
-Route::controller(CategoryController::class)->group(function () {
-    Route::get('/categories', 'index')->name('categories.index');
-});
+Route::resource('products', ProductController::class);
 
 
 require __DIR__ . '/auth.php';

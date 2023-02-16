@@ -4,7 +4,7 @@ namespace App\Services\PaymentProcessingService;
 
 use App\Models\Order;
 use App\Services\PaymentService\PayService;
-use App\Services\UpdateModelServices\OrderHistoryService;
+use App\Services\UpdateModelServices\HistoryService;
 use App\Services\UpdateModelServices\OrderService;
 use Illuminate\Http\Request;
 use YooKassa\Request\Payments\CreatePaymentResponse;
@@ -12,9 +12,9 @@ use YooKassa\Request\Payments\CreatePaymentResponse;
 class PayProcessService
 {
     public function __construct(
-        private readonly PayService          $payService,
-        private readonly OrderHistoryService $orderHistoryService,
-        private readonly OrderService        $orderService,
+        private readonly PayService     $payService,
+        private readonly HistoryService $orderHistoryService,
+        private readonly OrderService   $orderService,
     )
     {
     }

@@ -19,8 +19,7 @@ class CategoryController extends Controller
         private CategoryRepository $repository,
         private CategoryService $service,
     )
-    {
-    }
+    {}
 
     /**
      * Display a listing of the resource.
@@ -77,7 +76,7 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category): RedirectResponse
     {
-        $this->service->update($request, $category);
+        $this->service->update(request: $request, category: $category);
 
         return redirect()->route('categories.index');
     }
@@ -91,7 +90,7 @@ class CategoryController extends Controller
      */
     public function destroy(Request $request, Category $category): RedirectResponse
     {
-        $this->service->destroy($request, $category);
+        $this->service->destroy(request: $request, category: $category);
 
         return redirect()->route('categories.index');
     }

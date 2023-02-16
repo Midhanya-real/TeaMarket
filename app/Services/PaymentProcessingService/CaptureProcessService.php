@@ -4,15 +4,15 @@ namespace App\Services\PaymentProcessingService;
 
 use App\Models\History;
 use App\Services\PaymentService\PayService;
-use App\Services\UpdateModelServices\OrderHistoryService;
+use App\Services\UpdateModelServices\HistoryService;
 use YooKassa\Request\Payments\Payment\CancelResponse;
 use YooKassa\Request\Payments\Payment\CreateCaptureResponse;
 
 class CaptureProcessService
 {
     public function __construct(
-        private readonly PayService          $payService,
-        private readonly OrderHistoryService $orderHistoryService,
+        private readonly PayService     $payService,
+        private readonly HistoryService $orderHistoryService,
     )
     {
     }

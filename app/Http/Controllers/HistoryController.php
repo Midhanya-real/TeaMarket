@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\History;
-use App\Repository\OrderHistoryRepository;
+use App\Repository\HistoryRepository;
 use App\Services\PaymentProcessingService\CancelProcessService;
 use App\Services\PaymentProcessingService\CaptureProcessService;
 use App\Services\PaymentProcessingService\PayProcessService;
@@ -16,18 +16,16 @@ use Illuminate\View\View;
 class historyController extends Controller
 {
     public function __construct(
-        private readonly OrderHistoryRepository $repository,
-        private readonly PayProcessService      $payProcessService,
-        private readonly CancelProcessService   $cancelProcessService,
+        private readonly HistoryRepository     $repository,
+        private readonly PayProcessService     $payProcessService,
+        private readonly CancelProcessService  $cancelProcessService,
         private readonly CaptureProcessService $captureProcessService,
-        private readonly RefundProcessService $refundProcessService,
-
-        private readonly PayService $payService,
+        private readonly RefundProcessService  $refundProcessService,
     ){}
 
     public function index(Request $request): View
     {
-        $orders = $this->repository->index($request);
+        $orders = $this->repository->getAll($request);
 
         return view('history', ['orders' => $orders]);
     }

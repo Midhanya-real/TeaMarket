@@ -11,7 +11,7 @@ use Carbon\Carbon;
 class OrderService implements OrderServiceInterface
 {
 
-    public function store(StoreOrderRequest $request)
+    public function store(StoreOrderRequest $request): bool
     {
         return Order::create([
             'status' => $request->status,
@@ -23,7 +23,7 @@ class OrderService implements OrderServiceInterface
         ]);
     }
 
-    public function update(UpdateOrderRequest $request, Order $order)
+    public function update(UpdateOrderRequest $request, Order $order): bool
     {
         return $order->update([
             'status' => $request->status,
@@ -31,7 +31,7 @@ class OrderService implements OrderServiceInterface
         ]);
     }
 
-    public function destroy(Order $order)
+    public function destroy(Order $order): bool
     {
         return $order->delete();
     }

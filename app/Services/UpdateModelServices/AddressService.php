@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class AddressService implements AddressServiceInterface
 {
 
-    public function store(StoreAddressRequest $request)
+    public function store(StoreAddressRequest $request): bool
     {
         return Address::create([
             'country' => $request->country,
@@ -24,7 +24,7 @@ class AddressService implements AddressServiceInterface
         ]);
     }
 
-    public function update(UpdateAddressRequest $request, Address $address)
+    public function update(UpdateAddressRequest $request, Address $address): bool
     {
         return $address->update([
             'country' => $request->country,
@@ -36,7 +36,7 @@ class AddressService implements AddressServiceInterface
         ]);
     }
 
-    public function destroy(Request $request, Address $address)
+    public function destroy(Request $request, Address $address): bool
     {
         return $request->user()->can('delete', $address)
             ? $address->delete()

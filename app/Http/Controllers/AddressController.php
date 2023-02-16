@@ -18,7 +18,7 @@ class AddressController extends Controller
 
     public function __construct(
         private readonly AddressRepository $repository,
-        private AddressService             $service
+        private readonly AddressService $service
     ){}
 
     /**
@@ -41,7 +41,7 @@ class AddressController extends Controller
      */
     public function create(): View
     {
-        return view('addresses.partials.create-address-form', ['user_id' => Auth::user()->id]);
+        return view('addresses.partials.create-address-form');
     }
 
     /**
@@ -77,7 +77,7 @@ class AddressController extends Controller
      */
     public function update(UpdateAddressRequest $request, Address $address): RedirectResponse
     {
-        $this->service->update($request, $address);
+        $this->service->update(request: $request, address: $address);
 
 
         return redirect()->route('addresses.index');
@@ -91,7 +91,7 @@ class AddressController extends Controller
      */
     public function destroy(Request $request, Address $address): RedirectResponse
     {
-        $this->service->destroy($request, $address);
+        $this->service->destroy(request: $request, address: $address);
 
         return redirect()->route('addresses.index');
     }

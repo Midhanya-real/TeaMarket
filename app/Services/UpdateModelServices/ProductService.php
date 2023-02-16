@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class ProductService implements ProductServiceInterface
 {
 
-    public function store(StoreProductRequest $request)
+    public function store(StoreProductRequest $request): bool
     {
         return Product::create([
             'name' => $request->name,
@@ -24,7 +24,7 @@ class ProductService implements ProductServiceInterface
         ]);
     }
 
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product): bool
     {
         return $product->update([
             'name' => $request->name,
@@ -37,7 +37,7 @@ class ProductService implements ProductServiceInterface
         ]);
     }
 
-    public function destroy(Request $request, Product $product)
+    public function destroy(Request $request, Product $product): bool
     {
         return $request->user()->can('delete', $product)
             ? $product->delete()

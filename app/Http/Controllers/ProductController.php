@@ -13,8 +13,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Routing\Redirector;
 
 class ProductController extends Controller
 {
@@ -24,6 +22,8 @@ class ProductController extends Controller
         private readonly ProductService    $service,
     )
     {
+        $this->middleware('auth')->except(['index', 'show']);
+        $this->middleware(['admin', 'moder'])->except(['index', 'show']);
     }
 
     /**
@@ -83,7 +83,7 @@ class ProductController extends Controller
      * @param Product $product
      * @return Application|Factory|View
      */
-    public function edit(Product $product)
+    public function edit(Product $product): View|Factory|Application
     {
         return view('products.partials.update-product-form', ['product' => $product]);
     }
@@ -97,7 +97,7 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product): RedirectResponse
     {
-        $this->service->update($request, $product);
+        $this->service->update(request: $request, product: $product);
 
         return redirect()->route('products.index');
     }
@@ -111,7 +111,7 @@ class ProductController extends Controller
      */
     public function destroy(Request $request, Product $product): RedirectResponse
     {
-        $this->service->destroy($request, $product);
+        $this->service->destroy(request: $request, product: $product);
 
         return redirect()->route('products.index');
     }

@@ -9,9 +9,9 @@ use YooKassa\Request\Payments\Payment\CancelResponse;
 use YooKassa\Request\Payments\Payment\CreateCaptureResponse;
 use YooKassa\Request\Refunds\CreateRefundResponse;
 
-class OrderHistoryService
+class HistoryService
 {
-    public function create(Request $request, CreatePaymentResponse $payment)
+    public function create(Request $request, CreatePaymentResponse $payment): bool
     {
         return History::create([
             'payment_id' => $payment->id,

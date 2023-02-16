@@ -6,9 +6,9 @@ use App\Models\History;
 use Illuminate\Http\Request;
 use Illuminate\Support\LazyCollection;
 
-class OrderHistoryRepository
+class HistoryRepository
 {
-    public function index(Request $request): LazyCollection
+    public function getAll(Request $request): LazyCollection
     {
         return $request->user()->can('viewAny', History::class)
             ? History::lazy()
