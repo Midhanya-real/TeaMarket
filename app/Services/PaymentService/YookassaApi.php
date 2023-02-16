@@ -14,9 +14,9 @@ use YooKassa\Request\Refunds\CreateRefundResponse;
 class YookassaApi
 {
     public function __construct(
-        private array  $config,
+        private readonly array  $config,
 
-        private Client $client,
+        private readonly Client $client,
     )
     {
         $this->client->setAuth($this->config['market_id'], $this->config['secret_key']);

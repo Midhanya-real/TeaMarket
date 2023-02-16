@@ -19,8 +19,8 @@ class OrderController extends Controller
 {
 
     public function __construct(
-        private OrderService $service,
-        private OrderRepository $repository,
+        private readonly OrderService    $service,
+        private readonly OrderRepository $repository,
     )
     {
     }
@@ -52,16 +52,6 @@ class OrderController extends Controller
         return redirect()->route('orders.index');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Order $order
-     * @return Response
-     */
-    public function edit(Order $order)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -72,7 +62,7 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order): RedirectResponse
     {
-        $this->service->update($request, $order);
+        $this->service->update(request: $request, order: $order);
 
         return redirect()->route('orders.index');
     }
@@ -80,11 +70,10 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Request $request
      * @param Order $order
      * @return RedirectResponse
      */
-    public function destroy(Request $request, Order $order): RedirectResponse
+    public function destroy(Order $order): RedirectResponse
     {
         $this->service->destroy($order);
 
