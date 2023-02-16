@@ -87,12 +87,12 @@ class AddressController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Address $address
-     * @return Response
+     * @return RedirectResponse
      */
-    public function destroy(Request $request, Address $address): Response
+    public function destroy(Request $request, Address $address): RedirectResponse
     {
         $this->service->destroy($request, $address);
 
-        return response('', 200);
+        return redirect()->route('addresses.index');
     }
 }

@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/history/{order}/cancel', 'cancel')->name('history.cancel');
         Route::post('/history/{order}/capture', 'capture')->name('history.capture');
         Route::post('/history/{order}/refund', 'refund')->name('history.refund');
+        Route::get('/test', 'test')->name('test.action');
     });
 });
 
@@ -52,7 +53,7 @@ Route::controller(ProductController::class)->group(function () {
 });
 
 Route::controller(CategoryController::class)->group(function () {
-    Route::get('/categories', 'index');
+    Route::get('/categories', 'index')->name('categories.index');
 });
 
 

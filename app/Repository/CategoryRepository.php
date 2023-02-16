@@ -9,6 +9,6 @@ class CategoryRepository implements CategoryRepositoryInterface
 {
     public function getAll(): LazyCollection
     {
-        return Category::select('name')->lazy();
+        return Category::lazy();
     }
 }
