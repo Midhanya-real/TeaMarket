@@ -7,8 +7,10 @@ use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Repository\CategoryRepository;
 use App\Services\UpdateModelServices\CategoryService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
@@ -23,47 +25,47 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return View
      */
-    public function index(): Response
+    public function index(): View
     {
         $categories = $this->repository->getAll();
 
-        return response($categories);
+        return view('categories.categories', ['categories' => $categories]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('categories.partials.create-category-form');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param StoreCategoryRequest $request
-     * @return Response
+     * @return RedirectResponse
      */
-    public function store(StoreCategoryRequest $request): Response
+    public function store(StoreCategoryRequest $request): RedirectResponse
     {
-        $category = $this->service->store($request);
+        $this->service->store($request);
 
-        return response('ok',200); //TODO исправить
+        return redirect()->route('categories.index');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param Category $category
-     * @return Response
+     * @return View
      */
-    public function edit(Category $category)
+    public function edit(Category $category): View
     {
-        //
+        return view('categories.partials.update-category-form', ['category' => $category]);
     }
 
     /**
@@ -71,25 +73,26 @@ class CategoryController extends Controller
      *
      * @param UpdateCategoryRequest $request
      * @param Category $category
-     * @return Response
+     * @return RedirectResponse
      */
-    public function update(UpdateCategoryRequest $request, Category $category): Response
+    public function update(UpdateCategoryRequest $request, Category $category): RedirectResponse
     {
-        $newCategoryData = $this->service->update($request, $category);
+        $this->service->update($request, $category);
 
-        return response('ok',200); //TODO исправить
+        return redirect()->route('categories.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param Request $request
      * @param Category $category
-     * @return Response
+     * @return RedirectResponse
      */
-    public function destroy(Request $request, Category $category): Response
+    public function destroy(Request $request, Category $category): RedirectResponse
     {
         $this->service->destroy($request, $category);
 
-        return response('ok',200); //TODO исправить
+        return redirect()->route('categories.index');
     }
 }

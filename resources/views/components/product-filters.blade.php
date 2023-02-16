@@ -1,8 +1,25 @@
 <section>
     <div class="block bg-blue-100 absolute left-0 top-2 space-y-4">
-        <div class="block py-2">
+        <div class="block py-2 space-y-4">
             <form method="GET" action="{{route('products.index')}}">
                 @csrf
+                <div class="bg-white rounded-lg"> <!-- категория товара -->
+                    <span class="text-gray-700  justify-center">Categories</span>
+                    <div class="mt-2">
+                        <div class="flex flex-col">
+                            @foreach($filters['categories'] as $category)
+                                <label name="Country">
+                                    <input type="checkbox" name="categories[]" class="form-checkbox" value="{{$category->id}}">
+
+                                    <span class="ml-2">{{$category->name}}</span> <!-- значение из базы -->
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
+                <div class="block py-2"> </div>
+
                 <div class="bg-white rounded-lg"> <!-- тип товара -->
                     <span class="text-gray-700  justify-center">Types</span>
                     <div class="mt-2">
@@ -18,6 +35,7 @@
                     </div>
                 </div>
 
+                <div class="block py-2"> </div>
 
                 <div class="block bg-white rounded-lg"> <!-- вес товара -->
                     <span class="text-gray-700">Weights</span>
@@ -33,6 +51,8 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="block py-2"> </div>
 
                 <div class="block bg-white rounded-lg space-y-5"> <!-- цена -->
                     <span class="text-gray-700">Price</span>
@@ -54,6 +74,8 @@
                     </div>
                 </div>
 
+                <div class="block py-2"> </div>
+
                 <div class="block bg-white rounded-lg"> <!-- бренд -->
                     <span class="text-gray-700">Brands</span>
                     <div class="mt-2">
@@ -67,6 +89,8 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="block py-2"> </div>
 
                 <div class="block bg-white rounded-lg"> <!-- страна -->
                     <span class="text-white-700">Countries</span>

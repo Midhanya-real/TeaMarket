@@ -28,12 +28,12 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'type' => ['required', 'string', 'max:255'],
             'weight' => ['required', 'numeric'],
             'price' => ['required', 'numeric'],
-            'brand' => ['required', 'string', 'max:255'],
-            'country' => ['required', 'string', 'max:255'],
-            'category_id' => ['required', 'exists:App\Model\Category,id']
+            'type_id' => ['required', 'exists:App\Models\Type,id'],
+            'brand_id' => ['required', 'exists:App\Models\Brand,id'],
+            'country_id' => ['required', 'exists:App\Models\Country,id'],
+            'category_id' => ['required', 'exists:App\Models\Category,id']
         ];
     }
 }

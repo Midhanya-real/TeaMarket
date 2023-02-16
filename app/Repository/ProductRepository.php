@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Filters\Brand;
+use App\Filters\Category;
 use App\Filters\Country;
 use App\Filters\Price;
 use App\Filters\Type;
@@ -23,6 +24,7 @@ class ProductRepository implements ProductRepositoryInterface
         return app(Pipeline::class)
             ->send(Product::query())
             ->through([
+                Category::class,
                 Brand::class,
                 Country::class,
                 Price::class,

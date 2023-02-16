@@ -15,11 +15,11 @@ class ProductService implements ProductServiceInterface
     {
         return Product::create([
             'name' => $request->name,
-            'type' => $request->type,
             'weight' => $request->weight,
             'price' => $request->price,
-            'brand' => $request->brand,
-            'country' => $request->country,
+            'type_id' => $request->type_id,
+            'brand_id' => $request->brand_id,
+            'country_id' => $request->country_id,
             'category_id' => $request->category_id
         ]);
     }
@@ -28,11 +28,11 @@ class ProductService implements ProductServiceInterface
     {
         return $product->update([
             'name' => $request->name,
-            'type' => $request->type,
             'weight' => $request->weight,
             'price' => $request->price,
-            'brand' => $request->brand,
-            'country' => $request->country,
+            'type_id' => $request->type_id,
+            'brand_id' => $request->brand_id,
+            'country_id' => $request->country_id,
             'category_id' => $request->category_id
         ]);
     }

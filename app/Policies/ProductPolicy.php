@@ -52,7 +52,7 @@ class ProductPolicy
      */
     public function create(User $user): Response|bool
     {
-        return true;
+        return $user->isAdmin() || $user->isModer();
     }
 
     /**

@@ -12,9 +12,9 @@ use YooKassa\Request\Payments\CreatePaymentResponse;
 class PayProcessService
 {
     public function __construct(
-        private PayService          $payService,
-        private OrderHistoryService $orderHistoryService,
-        private OrderService        $orderService,
+        private readonly PayService          $payService,
+        private readonly OrderHistoryService $orderHistoryService,
+        private readonly OrderService        $orderService,
     )
     {
     }

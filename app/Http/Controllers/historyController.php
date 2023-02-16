@@ -8,6 +8,7 @@ use App\Services\PaymentProcessingService\CancelProcessService;
 use App\Services\PaymentProcessingService\CaptureProcessService;
 use App\Services\PaymentProcessingService\PayProcessService;
 use App\Services\PaymentProcessingService\RefundProcessService;
+use App\Services\PaymentService\PayService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -20,6 +21,8 @@ class historyController extends Controller
         private readonly CancelProcessService   $cancelProcessService,
         private readonly CaptureProcessService $captureProcessService,
         private readonly RefundProcessService $refundProcessService,
+
+        private readonly PayService $payService,
     ){}
 
     public function index(Request $request): View

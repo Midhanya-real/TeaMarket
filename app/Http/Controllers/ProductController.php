@@ -11,15 +11,17 @@ use App\Services\UpdateModelServices\ProductService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 
 class ProductController extends Controller
 {
     public function __construct(
         private readonly ProductRepository $productRepository,
-        private readonly FilterRepository $filterRepository,
-        private ProductService             $service,
+        private readonly FilterRepository  $filterRepository,
+        private readonly ProductService    $service,
     )
     {
     }
@@ -44,24 +46,24 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
-    public function create(StoreProductRequest $request)
+    public function create(): View
     {
-
+        return view('products.partials.create-product-form');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param StoreProductRequest $request
-     * @return Response
+     * @return RedirectResponse
      */
-    public function store(StoreProductRequest $request)
+    public function store(StoreProductRequest $request): RedirectResponse
     {
         $this->service->store($request);
 
-        return response('ok', 200); //TODO исправить
+        return redirect()->route('products.index');
     }
 
     /**
@@ -79,11 +81,11 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Product $product
-     * @return Response
+     * @return Application|Factory|View
      */
     public function edit(Product $product)
     {
-        //
+        return view('products.partials.update-product-form', ['product' => $product]);
     }
 
     /**
@@ -91,23 +93,26 @@ class ProductController extends Controller
      *
      * @param UpdateProductRequest $request
      * @param Product $product
-     * @return Response
+     * @return RedirectResponse
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product): RedirectResponse
     {
-        $newProductData = $this->service->update($request, $product);
+        $this->service->update($request, $product);
 
-        return response('ok', 200); //TODO исправить
+        return redirect()->route('products.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param Request $request
      * @param Product $product
-     * @return Response
+     * @return RedirectResponse
      */
-    public function destroy(Request $request, Product $product)
+    public function destroy(Request $request, Product $product): RedirectResponse
     {
         $this->service->destroy($request, $product);
+
+        return redirect()->route('products.index');
     }
 }

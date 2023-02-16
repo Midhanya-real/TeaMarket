@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Country;
 use App\Models\Product;
 use App\Models\Type;
@@ -20,6 +21,11 @@ class FilterRepository
     {
         return Type::lazy();
 
+    }
+
+    private function getCategories(): LazyCollection
+    {
+        return Category::lazy();
     }
 
     private function getCountries(): LazyCollection
@@ -43,11 +49,12 @@ class FilterRepository
     public function getAll(): Collection
     {
         return collect([
+            'categories' => $this->getCategories(),
             'brands' => $this->getBrands(),
             'types' => $this->getTypes(),
             'countries' => $this->getCountries(),
             'prices' => $this->getPrice(),
-            'weights'=> $this->getWeight(),
+            'weights' => $this->getWeight(),
         ]);
     }
 }
