@@ -13,7 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class historyController extends Controller
+class HistoryController extends Controller
 {
     public function __construct(
         private readonly HistoryRepository     $repository,
