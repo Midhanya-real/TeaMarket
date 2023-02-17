@@ -6,6 +6,7 @@ use App\Actions\Payments\PaymentBodyParser;
 use App\Models\History;
 use App\Services\PaymentService\PaymentBuilder\PaymentBodyBuilder;
 use Illuminate\Http\Request;
+use YooKassa\Model\CurrencyCode;
 use YooKassa\Request\Payments\CreatePaymentResponse;
 use YooKassa\Request\Payments\Payment\CancelResponse;
 use YooKassa\Request\Payments\Payment\CreateCaptureResponse;
@@ -24,7 +25,7 @@ class PayService
     public function create(Request $order): CreatePaymentResponse
     {
         $body = $this->paymentBodyBuilder
-            ->amount(price: $order->price, currency: 'RUB')
+            ->amount(price: $order->price, currency: CurrencyCode::RUB)
             ->confirmation(type: $order->type,url: $order->url)
             ->description(description: $this->parser->getDescription($order))
             ->testMode(test: true)
