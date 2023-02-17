@@ -26,9 +26,9 @@ class CategoryController extends Controller
      *
      * @return View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $categories = $this->repository->getAll();
+        $categories = $this->repository->getAll($request);
 
         return view('categories.categories', ['categories' => $categories]);
     }

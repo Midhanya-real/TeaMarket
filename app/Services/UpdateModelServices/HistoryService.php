@@ -11,7 +11,7 @@ use YooKassa\Request\Refunds\CreateRefundResponse;
 
 class HistoryService
 {
-    public function create(Request $request, CreatePaymentResponse $payment): bool
+    public function create(Request $request, CreatePaymentResponse $payment)
     {
         return History::create([
             'payment_id' => $payment->id,

@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class AddressService implements AddressServiceInterface
 {
 
-    public function store(StoreAddressRequest $request): bool
+    public function store(StoreAddressRequest $request)
     {
         return Address::create([
             'country' => $request->country,
