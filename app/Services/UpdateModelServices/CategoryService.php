@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class CategoryService implements CategoryServiceInterface
 {
 
-    public function store(StoreCategoryRequest $request): bool
+    public function store(StoreCategoryRequest $request)
     {
         return Category::create([
             'name' => $request->name

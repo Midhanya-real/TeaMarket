@@ -26,7 +26,7 @@ class CategoryPolicy
      */
     public function viewAny(User $user): Response|bool
     {
-        return true;
+        return $user->isAdmin() || $user->isModer();
     }
 
     /**
@@ -38,7 +38,7 @@ class CategoryPolicy
      */
     public function view(User $user, Category $category): Response|bool
     {
-        return true;
+        return $user->isAdmin() || $user->isModer();
     }
 
     /**

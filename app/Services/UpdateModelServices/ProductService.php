@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class ProductService implements ProductServiceInterface
 {
 
-    public function store(StoreProductRequest $request): bool
+    public function store(StoreProductRequest $request)
     {
         return Product::create([
             'name' => $request->name,

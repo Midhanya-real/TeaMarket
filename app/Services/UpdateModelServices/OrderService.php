@@ -11,7 +11,7 @@ use Carbon\Carbon;
 class OrderService implements OrderServiceInterface
 {
 
-    public function store(StoreOrderRequest $request): bool
+    public function store(StoreOrderRequest $request)
     {
         return Order::create([
             'status' => $request->status,
@@ -27,7 +27,7 @@ class OrderService implements OrderServiceInterface
     {
         return $order->update([
             'status' => $request->status,
-            'updated_at' => now(),
+            'updated_at' => Carbon::now(),
         ]);
     }
 
