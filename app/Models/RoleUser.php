@@ -14,6 +14,9 @@ class RoleUser extends Model
     public $timestamps = false;
     public $incrementing = false;
 
-    protected $fillable = ['user_id', 'role_id'];
+    protected $fillable = [
+        'user_id',
+        'role_id'
+    ];
 
 }

@@ -5,7 +5,7 @@ namespace App\View\Components;
 use Illuminate\Support\LazyCollection;
 use Illuminate\View\Component;
 
-class OrdersHistory extends Component
+class OrdersPayments extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class OrdersHistory extends Component
      */
     public function render()
     {
-        return view('components.orders-history');
+        return view('components.orders-payments');
     }
 }

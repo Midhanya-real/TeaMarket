@@ -3,37 +3,38 @@
 namespace App\Services\PaymentProcessingService;
 
 use App\Models\History;
+use App\Models\Payment;
 use App\Services\PaymentService\PayService;
 use App\Services\UpdateModelServices\HistoryService;
-use YooKassa\Request\Payments\Payment\CancelResponse;
+use App\Services\UpdateModelServices\PaymentService;
 use YooKassa\Request\Payments\Payment\CreateCaptureResponse;
 
 class CaptureProcessService
 {
     public function __construct(
         private readonly PayService     $payService,
-        private readonly HistoryService $orderHistoryService,
+        private readonly PaymentService $orderHistoryService,
     )
     {
     }
 
 
 
-    private function createPayment(History $order): CreateCaptureResponse
+    private function createPayment(Payment $order): CreateCaptureResponse
     {
         return $this->payService->capture($order);
     }
 
-    private function updateHistoryOrder(History $order, CreateCaptureResponse $orderObject): bool
+    private function updatePaymentOrder(Payment $order, CreateCaptureResponse $orderObject): bool
     {
-        return $this->orderHistoryService->update($order, $orderObject);
+        return $this->orderHistoryService->update($order, $orderObject->status);
     }
 
-    public function execute(History $order): CreateCaptureResponse
+    public function execute(Payment $order): CreateCaptureResponse
     {
         $orderObject = $this->createPayment($order);
 
-        $this->updateHistoryOrder(order: $order, orderObject: $orderObject);
+        $this->updatePaymentOrder(order: $order, orderObject: $orderObject);
 
         return $orderObject;
     }

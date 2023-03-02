@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Order;
-use App\Resources\OrderResources\OrderHistoryStatuses;
+use App\Resources\OrderResources\PaymentStatuses;
 use Illuminate\Http\Request;
 use Illuminate\Support\LazyCollection;
 

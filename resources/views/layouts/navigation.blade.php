@@ -33,15 +33,13 @@
                         </div>
                     @endif
 
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('history.index')" :active="request()->routeIs('history.index')">
-                            @if(Auth::user()->isAdmin() || Auth::user()->isModer())
+                    @if(Auth::user()->isAdmin() || Auth::user()->isModer())
+                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <x-nav-link :href="route('payments.index')" :active="request()->routeIs('payments.index')">
                                 {{ __('Orders') }}
-                            @else
-                                {{ __('History') }}
-                            @endif
-                        </x-nav-link>
-                    </div>
+                            </x-nav-link>
+                        </div>
+                    @endif
                 @endauth
             </div>
 

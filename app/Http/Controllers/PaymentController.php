@@ -2,32 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\History;
-use App\Repository\HistoryRepository;
+use App\Models\Payment;
+use App\Repository\PaymentRepository;
 use App\Services\PaymentProcessingService\CancelProcessService;
 use App\Services\PaymentProcessingService\CaptureProcessService;
 use App\Services\PaymentProcessingService\PayProcessService;
 use App\Services\PaymentProcessingService\RefundProcessService;
-use App\Services\PaymentService\PayService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
-class HistoryController extends Controller
+class PaymentController extends Controller
 {
     public function __construct(
-        private readonly HistoryRepository     $repository,
+        private readonly PaymentRepository     $paymentRepository,
         private readonly PayProcessService     $payProcessService,
         private readonly CancelProcessService  $cancelProcessService,
         private readonly CaptureProcessService $captureProcessService,
         private readonly RefundProcessService  $refundProcessService,
     ){}
 
-    public function index(Request $request): View
+    public function index(Request $request)
     {
-        $orders = $this->repository->getAll($request);
+        $payments = $this->paymentRepository->getAll($request);
 
-        return view('history', ['orders' => $orders]);
+        //TODO view сделай
     }
 
     public function store(Request $order): RedirectResponse
@@ -37,24 +35,24 @@ class HistoryController extends Controller
         return redirect($orderObject->confirmation->confirmation_url);
     }
 
-    public function cancel(History $order): RedirectResponse
+    public function cancel(Payment $order): RedirectResponse
     {
         $this->cancelProcessService->execute($order);
 
-        return redirect()->route('history.index');
+        return redirect()->route('history.index'); //TODO переделать под Payment
     }
 
-    public function capture(History $order): RedirectResponse
+    public function capture(Payment $order): RedirectResponse
     {
         $this->captureProcessService->execute($order);
 
-        return redirect()->route('history.index');
+        return redirect()->route('history.index'); //TODO переделать под Payment
     }
 
-    public function refund(History $order): RedirectResponse
+    public function refund(Payment $order): RedirectResponse
     {
         $this->refundProcessService->execute($order);
 
-        return redirect()->route('history.index');
+        return redirect()->route('history.index'); //TODO переделать под Payment
     }
 }

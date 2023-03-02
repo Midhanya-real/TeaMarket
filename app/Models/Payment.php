@@ -2,30 +2,26 @@
 
 namespace App\Models;
 
-use App\Resources\OrderResources\OrderHistoryStatuses;
+use App\Resources\OrderResources\PaymentStatuses;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class History extends Model
+class Payment extends Model
 {
     use HasFactory;
-
-    protected $primaryKey = 'payment_id';
-
-    public $incrementing = false;
 
     public $timestamps = false;
 
     protected $casts = [
-        'status' => OrderHistoryStatuses::class,
+        'status' => PaymentStatuses::class,
     ];
 
     protected $fillable = [
         'payment_id',
         'price',
         'status',
-        'product_id',
+        'order_id',
         'user_id',
     ];
 
@@ -34,8 +30,8 @@ class History extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function product(): BelongsTo
+    public function order(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Order::class);
     }
 }

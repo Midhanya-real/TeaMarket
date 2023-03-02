@@ -2,7 +2,7 @@
 
 namespace App\Resources\OrderResources;
 
-enum OrderHistoryStatuses: string
+enum PaymentStatuses: string
 {
     case Pending = 'pending';
     case Waiting = 'waiting_for_capture';

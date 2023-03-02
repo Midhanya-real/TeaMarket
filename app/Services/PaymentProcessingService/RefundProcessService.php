@@ -2,40 +2,38 @@
 
 namespace App\Services\PaymentProcessingService;
 
-use App\Models\History;
+use App\Models\Payment;
+use App\Resources\OrderResources\PaymentStatuses;
 use App\Services\PaymentService\PayService;
-use App\Services\UpdateModelServices\HistoryService;
-use YooKassa\Request\Payments\Payment\CreateCaptureResponse;
+use App\Services\UpdateModelServices\PaymentService;
 use YooKassa\Request\Refunds\CreateRefundResponse;
 
 class RefundProcessService
 {
     public function __construct(
         private readonly PayService     $payService,
-        private readonly HistoryService $orderHistoryService,
+        private readonly PaymentService $orderHistoryService,
     )
     {
     }
 
 
 
-    private function createPayment(History $order): CreateRefundResponse
+    private function createPayment(Payment $order): CreateRefundResponse
     {
         return $this->payService->refund($order);
     }
 
-    private function updateHistoryOrder(History $order): bool
+    private function updatePaymentOrder(Payment $order): bool
     {
-        $status = ['status' => 'refunded'];
-
-        return $this->orderHistoryService->update($order, $status);
+        return $this->orderHistoryService->update($order, PaymentStatuses::Refunded->value);
     }
 
-    public function execute(History $order): CreateRefundResponse
+    public function execute(Payment $order): CreateRefundResponse
     {
         $orderObject = $this->createPayment($order);
 
-        $this->updateHistoryOrder(order: $order);
+        $this->updatePaymentOrder(order: $order);
 
         return $orderObject;
     }
