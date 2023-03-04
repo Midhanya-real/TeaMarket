@@ -3,8 +3,11 @@
 namespace App\Services\PaymentProcessingService;
 
 use App\Models\History;
+use App\Models\Order;
+use App\Models\Payment;
 use App\Services\PaymentService\PayService;
 use App\Services\UpdateModelServices\HistoryService;
+use App\Services\UpdateModelServices\PaymentService;
 use YooKassa\Request\Payments\Payment\CancelResponse;
 
 class CancelProcessService
@@ -12,26 +15,26 @@ class CancelProcessService
 
     public function __construct(
         private readonly PayService     $payService,
-        private readonly HistoryService $orderHistoryService,
+        private readonly PaymentService $orderHistoryService,
     )
     {
     }
 
-    private function createPayment(History $order): CancelResponse
+    private function createPayment(Payment $order): CancelResponse
     {
         return $this->payService->cancel($order);
     }
 
-    private function updateHistoryOrder(History $order, CancelResponse $orderObject): bool
+    private function updatePaymentOrder(Payment $order, CancelResponse $orderObject)
     {
-        return $this->orderHistoryService->update($order, $orderObject);
+        return $this->orderHistoryService->update($order, $orderObject->status);
     }
 
-    public function execute(History $order): CancelResponse
+    public function execute(Payment $order): CancelResponse
     {
         $orderObject = $this->createPayment($order);
 
-        $this->updateHistoryOrder(order: $order, orderObject: $orderObject);
+        $this->updatePaymentOrder(order: $order, orderObject: $orderObject);
 
         return $orderObject;
     }

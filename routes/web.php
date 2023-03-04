@@ -24,30 +24,28 @@ Route::get('/', function () {
     return redirect('products');
 })->name('homePage');
 
+Route::resource('products', ProductController::class);
+
+Route::middleware(['admin'])->group(function () {
+    Route::resource('categories', CategoryController::class);
+
+    Route::controller(PaymentController::class)->group(function () {
+        Route::get('/payments', 'index')->name('payments.index');
+        Route::post('/payments', 'store')->name('payments.store');
+        Route::post('/payments/{order}/capture','capture')->name('payments.capture');
+        Route::post('/payments/{order}/cancel', 'cancel')->name('payments.cancel');
+        Route::post('/payments/{order}/refund', 'refund')->name('payments.refund');
+    });
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
-Route::middleware(['auth'])->group(function () {
     Route::resource('addresses', AddressController::class);
     Route::resource('orders', OrderController::class);
-
-    Route::controller(HistoryController::class)->group(function () {
-        Route::get('/history', 'index')->name('history.index');
-        Route::post('/history', 'store')->name('history.store');
-        Route::post('/history/{order}/cancel', 'cancel')->name('history.cancel');
-        Route::post('/history/{order}/refund', 'refund')->name('history.refund');
-    });
 });
-
-Route::middleware(['admin', 'moder'])->group(function () {
-    Route::resource('categories', CategoryController::class);
-    Route::post('/history/{order}/capture', [HistoryController::class, 'capture'])->name('history.capture');
-});
-
-Route::resource('products', ProductController::class);
 
 
 require __DIR__ . '/auth.php';

@@ -3,7 +3,8 @@
 namespace App\Services\PaymentService;
 
 use App\Actions\Payments\PaymentBodyParser;
-use App\Models\History;
+use App\Models\Order;
+use App\Models\Payment;
 use App\Services\PaymentService\PaymentBuilder\PaymentBodyBuilder;
 use Illuminate\Http\Request;
 use YooKassa\Model\CurrencyCode;
@@ -17,7 +18,7 @@ class PayService
     public function __construct(
         private YookassaApi        $payment,
         private PaymentBodyBuilder $paymentBodyBuilder,
-        private PaymentBodyParser $parser,
+        private PaymentBodyParser  $parser,
     )
     {
     }
@@ -26,7 +27,7 @@ class PayService
     {
         $body = $this->paymentBodyBuilder
             ->amount(price: $order->price, currency: CurrencyCode::RUB)
-            ->confirmation(type: $order->type,url: $order->url)
+            ->confirmation(type: $order->type, url: $order->url)
             ->description(description: $this->parser->getDescription($order))
             ->testMode(test: true)
             ->getBody();
@@ -34,19 +35,19 @@ class PayService
         return $this->payment->createPayment($body);
     }
 
-    public function cancel(History $order): CancelResponse
+    public function cancel(Payment $order): CancelResponse
     {
         return $this->payment->cancelPayment($order->payment_id);
     }
 
-    public function capture(History $order): CreateCaptureResponse
+    public function capture(Payment $order): CreateCaptureResponse
     {
         $amount = $this->payment->getPaymentInfo($order->payment_id)->amount;
 
         return $this->payment->capturePayment($order->payment_id, [$amount]);
     }
 
-    public function refund(History $order): CreateRefundResponse
+    public function refund(Payment $order): CreateRefundResponse
     {
         $amount = $this->payment->getPaymentInfo($order->payment_id)->amount;
 

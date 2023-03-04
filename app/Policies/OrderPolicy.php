@@ -73,7 +73,7 @@ class OrderPolicy
      */
     public function delete(User $user, Order $order): Response|bool
     {
-        return false;
+        return $user->id === $order->user_id;
     }
 
     /**

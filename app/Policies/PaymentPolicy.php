@@ -2,18 +2,18 @@
 
 namespace App\Policies;
 
-use App\Models\History;
+use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-class HistoryPolicy
+class PaymentPolicy
 {
     use HandlesAuthorization;
 
     public function before(User $user)
     {
-        if ($user->isAdmin() || $user->isModer()) {
+        if($user->isAdmin() || $user->isModer()){
             return true;
         }
     }
@@ -26,19 +26,19 @@ class HistoryPolicy
      */
     public function viewAny(User $user)
     {
-        $user->isAdmin() || $user->isModer();
+        return $user->isAdmin() || $user->isModer();
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param User $user
-     * @param History $orderHistory
+     * @param Payment $payment
      * @return Response|bool
      */
-    public function view(User $user, History $orderHistory)
+    public function view(User $user, Payment $payment)
     {
-        return $user->id === $orderHistory->user_id;
+        return $user->isAdmin() || $user->isModer();
     }
 
     /**
@@ -56,22 +56,22 @@ class HistoryPolicy
      * Determine whether the user can update the model.
      *
      * @param User $user
-     * @param History $orderHistory
+     * @param Payment $payment
      * @return Response|bool
      */
-    public function update(User $user, History $orderHistory)
+    public function update(User $user, Payment $payment)
     {
-        return true;
+        return $user->id === $payment->user_id;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param User $user
-     * @param History $orderHistory
+     * @param Payment $payment
      * @return Response|bool
      */
-    public function delete(User $user, History $orderHistory)
+    public function delete(User $user, Payment $payment)
     {
         return false;
     }
@@ -80,10 +80,10 @@ class HistoryPolicy
      * Determine whether the user can restore the model.
      *
      * @param User $user
-     * @param History $orderHistory
+     * @param Payment $payment
      * @return Response|bool
      */
-    public function restore(User $user, History $orderHistory)
+    public function restore(User $user, Payment $payment)
     {
         return false;
     }
@@ -92,10 +92,10 @@ class HistoryPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param User $user
-     * @param History $orderHistory
+     * @param Payment $payment
      * @return Response|bool
      */
-    public function forceDelete(User $user, History $orderHistory)
+    public function forceDelete(User $user, Payment $payment)
     {
         return false;
     }

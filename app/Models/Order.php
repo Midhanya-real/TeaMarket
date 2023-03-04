@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use App\Resources\OrderResources\OrderHistoryStatuses;
-use App\Resources\OrderResources\OrderStatuses;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
@@ -15,16 +14,15 @@ class Order extends Model
     protected $fillable = [
         'created_at',
         'updated_at',
-        'status',
         'count',
         'user_id',
         'product_id',
-        'payment_id'
     ];
 
-    protected $casts = [
-        'status' => OrderStatuses::class,
-    ];
+    public function payment(): HasOne
+    {
+        return $this->hasOne(Payment::class);
+    }
 
     public function user(): BelongsTo
     {

@@ -16,8 +16,8 @@ class CategoryController extends Controller
 {
 
     public function __construct(
-        private CategoryRepository $repository,
-        private CategoryService $service,
+        private readonly CategoryRepository $repository,
+        private readonly CategoryService    $service,
     )
     {}
 
