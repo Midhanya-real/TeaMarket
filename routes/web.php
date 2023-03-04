@@ -26,7 +26,7 @@ Route::get('/', function () {
 
 Route::resource('products', ProductController::class);
 
-Route::middleware(['admin', 'moder'])->group(function () {
+Route::middleware(['admin'])->group(function () {
     Route::resource('categories', CategoryController::class);
 
     Route::controller(PaymentController::class)->group(function () {

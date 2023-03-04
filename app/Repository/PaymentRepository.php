@@ -9,7 +9,7 @@ class PaymentRepository
 {
     public function getAll(Request $request)
     {
-        return $request->user()->can('viewAny')
+        return $request->user()->can('viewAny', Payment::class)
             ? Payment::lazy()
             : [];
     }

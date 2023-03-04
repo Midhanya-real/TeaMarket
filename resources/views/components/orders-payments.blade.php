@@ -3,7 +3,7 @@
     @foreach($orders as $order)
         <div class="block p-6 rounded-lg shadow-lg bg-white max-w-xl">
             <a class="text-gray-900 text-xl leading-tight font-medium mb-2"
-            >{{__('Order number: #')}}{{$order->payment_id}}</a>
+            >{{__('Order number: #')}}{{$order->id}}</a>
             <p class="text-gray-700 text-base mb-4">
                 {{__('status:')}}
                 {{$order->status}}

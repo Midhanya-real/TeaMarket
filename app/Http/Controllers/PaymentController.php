@@ -10,6 +10,7 @@ use App\Services\PaymentProcessingService\PayProcessService;
 use App\Services\PaymentProcessingService\RefundProcessService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class PaymentController extends Controller
 {
@@ -21,11 +22,11 @@ class PaymentController extends Controller
         private readonly RefundProcessService  $refundProcessService,
     ){}
 
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $payments = $this->paymentRepository->getAll($request);
 
-        //TODO view сделай
+        return view('payments', ['orders' => $payments]);
     }
 
     public function store(Request $order): RedirectResponse
