@@ -2,6 +2,7 @@ version: "3.9"
 
 services:
     nginx:
+        container_name: nginx
         image: nginx:latest
         ports:
             - "81:80"
@@ -13,6 +14,7 @@ services:
             - php
 
     php:
+        container_name: php
         build:
             context: .docker/php
             dockerfile: dockerfile
@@ -24,6 +26,7 @@ services:
             - postgres
 
     postgres:
+        container_name: postgres
         image: postgres:latest
         env_file:
             - .env
@@ -38,5 +41,14 @@ services:
             PGDATA: "/var/lib/postgresql/data"
         volumes:
             - 'pgdata:/var/lib/postgresql/data/'
+
+    cron:
+        container_name: cron
+        build:
+            context: .docker/crontab
+            dockerfile: dockerfile
+        volumes:
+            - './:/var/www'
+        restart: always
 volumes:
     pgdata:
