@@ -1,0 +1,16 @@
+FROM php:8.1-fpm
+
+WORKDIR /var/www
+
+RUN apt-get update && apt-get install -y cron libpq-dev libpng-dev libzip-dev zip
+RUN docker-php-ext-install pgsql pdo_pgsql gd zip\
+&& docker-php-ext-enable opcache
+
+RUN touch /var/log/updatePaymentsCrontab.log
+RUN chmod 0777 /var/log/updatePaymentsCrontab.log
+
+COPY updatePaymentCrontab /etc/cron.d/updatePaymentCrontab
+
+RUN chmod 0644 /etc/cron.d/updatePaymentCrontab && crontab /etc/cron.d/updatePaymentCrontab
+
+ENTRYPOINT ["cron", "-f"]

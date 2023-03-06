@@ -1,0 +1,1 @@
+* * * * * cd /usr/local/bin && ./php /var/www/artisan schedule:run >> /var/log/updatePaymentsCrontab.log 2>&1
