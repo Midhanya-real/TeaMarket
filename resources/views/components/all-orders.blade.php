@@ -31,13 +31,27 @@
             <form action="{{route('orders.destroy', $order)}}" method="POST">
                 @csrf
                 @method('delete')
-                @if(!empty($order->payment->status) && $order->payment->status != \App\Resources\OrderResources\OrderStatuses::Canceled)
-                    <button type="submit"
-                            class=" inline-block px-6 py-2.5 bg-blue-600 text-black font-black text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                        {{__('Cancel')}}
-                    </button>
+                @if(!empty($order->payment->status))
+                    @if($order->payment->status == \App\Resources\OrderResources\OrderStatuses::NoPaid)
+                        <button type="submit"
+                                class=" inline-block px-6 py-2.5 bg-blue-600 text-black font-black text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                            {{__('Cancel')}}
+                        </button>
+                    @endif
                 @endif
             </form>
+
+            @if(!empty($order->payment->status))
+            <form action="{{route('payments.refund', $order->payment)}}" method="POST">
+                @csrf
+                    @if($order->payment->status != \App\Resources\OrderResources\PaymentStatuses::Refunded && $order->payment->status != \App\Resources\OrderResources\PaymentStatuses::Canceled)
+                        <button type="submit"
+                                class=" inline-block px-6 py-2.5 bg-blue-600 text-black font-black text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                            {{__('Refund')}}
+                        </button>
+                    @endif
+            </form>
+            @endif
 
             @if(empty($order->payment->status))
                 <form method="POST" action="{{route('payments.store')}}">
@@ -47,6 +61,7 @@
                     <input type="hidden" value="{{$order->product->price * $order->count}}" name="price">
                     <input type="hidden" value="{{$order->count}}" name="count">
                     <input type="hidden" value="{{$order->product_id}}" name="product_id">
+                    <input type="hidden" value="{{$order->user_id}}" name="user_id">
                     <input type="hidden" value="redirect" name="type">
                     <input type="hidden" value="http://localhost:81/orders" name="url">
 

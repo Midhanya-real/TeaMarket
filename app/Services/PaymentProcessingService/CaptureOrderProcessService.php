@@ -9,7 +9,7 @@ use App\Services\UpdateModelServices\HistoryService;
 use App\Services\UpdateModelServices\PaymentService;
 use YooKassa\Request\Payments\Payment\CreateCaptureResponse;
 
-class CaptureProcessService
+class CaptureOrderProcessService
 {
     public function __construct(
         private readonly PayService     $payService,

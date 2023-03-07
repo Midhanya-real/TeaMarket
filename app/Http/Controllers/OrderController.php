@@ -46,7 +46,6 @@ class OrderController extends Controller
         return redirect()->route('orders.index');
     }
 
-
     /**
      * Remove the specified resource from storage.
      *

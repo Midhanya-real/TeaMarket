@@ -16,9 +16,9 @@ use YooKassa\Request\Refunds\CreateRefundResponse;
 class PayService
 {
     public function __construct(
-        private YookassaApi        $payment,
-        private PaymentBodyBuilder $paymentBodyBuilder,
-        private PaymentBodyParser  $parser,
+        private readonly YookassaApi        $payment,
+        private readonly PaymentBodyBuilder $paymentBodyBuilder,
+        private readonly PaymentBodyParser  $parser,
     )
     {
     }
@@ -29,6 +29,7 @@ class PayService
             ->amount(price: $order->price, currency: CurrencyCode::RUB)
             ->confirmation(type: $order->type, url: $order->url)
             ->description(description: $this->parser->getDescription($order))
+            ->metadata(order_id: $order->id,user_id: $order->user_id)
             ->testMode(test: true)
             ->getBody();
 
