@@ -3,10 +3,12 @@
 namespace App\Services\PaymentService\PaymentBuilder;
 
 use App\Models\Order;
+use App\Models\User;
 
 class PaymentBodyBuilder implements PaymentBodyBuilderInterface
 {
     private array $body;
+
     public function amount(float $price, string $currency): static
     {
         $amount = [
@@ -34,6 +36,16 @@ class PaymentBodyBuilder implements PaymentBodyBuilderInterface
     public function description(string $description): static
     {
         $this->body['description'] = $description;
+
+        return $this;
+    }
+
+    public function metadata(int $order_id, int $user_id): static
+    {
+        $this->body['metadata'] = [
+            'order_id' => $order_id,
+            'user_id' => $user_id
+        ];
 
         return $this;
     }

@@ -10,7 +10,7 @@ use App\Services\UpdateModelServices\HistoryService;
 use App\Services\UpdateModelServices\PaymentService;
 use YooKassa\Request\Payments\Payment\CancelResponse;
 
-class CancelProcessService
+class CancelOrderProcessService
 {
 
     public function __construct(

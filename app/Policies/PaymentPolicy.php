@@ -73,7 +73,7 @@ class PaymentPolicy
      */
     public function delete(User $user, Payment $payment)
     {
-        return false;
+        return true;
     }
 
     /**

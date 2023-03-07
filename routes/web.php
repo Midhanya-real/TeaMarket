@@ -31,10 +31,8 @@ Route::middleware(['admin'])->group(function () {
 
     Route::controller(PaymentController::class)->group(function () {
         Route::get('/payments', 'index')->name('payments.index');
-        Route::post('/payments', 'store')->name('payments.store');
-        Route::post('/payments/{order}/capture','capture')->name('payments.capture');
         Route::post('/payments/{order}/cancel', 'cancel')->name('payments.cancel');
-        Route::post('/payments/{order}/refund', 'refund')->name('payments.refund');
+        Route::post('/payments/{order}/capture', 'capture')->name('payments.capture');
     });
 });
 
@@ -45,6 +43,11 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('addresses', AddressController::class);
     Route::resource('orders', OrderController::class);
+
+    Route::controller(PaymentController::class)->group(function () {
+        Route::post('/payments', 'store')->name('payments.store');
+        Route::post('/payments/{order}/refund', 'refund')->name('payments.refund');
+    });
 });
 
 

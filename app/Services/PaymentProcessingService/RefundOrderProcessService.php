@@ -8,7 +8,7 @@ use App\Services\PaymentService\PayService;
 use App\Services\UpdateModelServices\PaymentService;
 use YooKassa\Request\Refunds\CreateRefundResponse;
 
-class RefundProcessService
+class RefundOrderProcessService
 {
     public function __construct(
         private readonly PayService     $payService,
