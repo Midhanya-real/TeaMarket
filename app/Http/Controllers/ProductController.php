@@ -21,10 +21,7 @@ class ProductController extends Controller
         private readonly FilterRepository  $filterRepository,
         private readonly ProductService    $service,
     )
-    {
-        $this->middleware('auth')->except(['index', 'show']);
-        $this->middleware(['admin', 'moder'])->except(['index', 'show']);
-    }
+    {}
 
     /**
      * Display a listing of the resource.

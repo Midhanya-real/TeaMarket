@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <form method="post" action="{{ route('products.store') }}" class="mt-6 space-y-6">
+                <form method="POST" action="{{ route('products.store') }}" class="mt-6 space-y-6">
                     @csrf
 
                     <div>
@@ -19,12 +19,12 @@
 
                     <div>
                         <x-input-label for="weight" :value="__('weight')"/>
-                        <x-text-input id="weight" name="weight" type="number" class="mt-1 block" autocomplete="new-password"/>
+                        <x-text-input id="weight" name="weight" type="number" step="any" class="mt-1 block" autocomplete="new-password"/>
                     </div>
 
                     <div>
                         <x-input-label for="price" :value="__('price')"/>
-                        <x-text-input id="price" name="price" type="number" class="mt-1 block"
+                        <x-text-input id="price" name="price" type="number" step="any" class="mt-1 block"
                                       autocomplete="new-password"/>
                     </div>
 
