@@ -41,20 +41,20 @@ class PaymentController extends Controller
     {
         $this->cancelProcessService->execute($order);
 
-        return redirect()->route('payments.index'); //TODO переделать под Payment
+        return redirect()->route('payments.index');
     }
 
     public function capture(Payment $order): RedirectResponse
     {
         $this->captureProcessService->execute($order);
 
-        return redirect()->route('payments.index'); //TODO переделать под Payment
+        return redirect()->route('payments.index');
     }
 
     public function refund(Payment $order): RedirectResponse
     {
         $this->refundProcessService->execute($order);
 
-        return redirect()->route('payments.index'); //TODO переделать под Payment
+        return redirect()->route('payments.index');
     }
 }

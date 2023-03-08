@@ -4,7 +4,8 @@
             <div class="flex justify-center inline-flex mt-2 mx-px">
                 <div class="block p-6 rounded-lg shadow-lg bg-white max-w-xl space-x-2">
                     <a class="text-gray-900 text-xl leading-tight font-medium mb-2"
-                       href="{{route('products.show', $product)}}">{{$product->name}}</a>
+                       href="{{route('products.show', $product)}}">{{$product->name}}
+                    </a>
                     <p class="text-gray-700 text-base mb-4">
                         {{__('Weight:')}}
                         {{$product->weight}}

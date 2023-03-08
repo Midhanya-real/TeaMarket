@@ -26,8 +26,9 @@ Route::get('/', function () {
 
 Route::resource('products', ProductController::class);
 
-Route::middleware(['admin'])->group(function () {
+Route::middleware('admin')->group(function () {
     Route::resource('categories', CategoryController::class);
+    Route::resource('products', ProductController::class)->except('index', 'show');
 
     Route::controller(PaymentController::class)->group(function () {
         Route::get('/payments', 'index')->name('payments.index');
@@ -40,9 +41,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
     Route::resource('addresses', AddressController::class);
-    Route::resource('orders', OrderController::class);
+
+    Route::controller(OrderController::class)->group(function () {
+        Route::get('/orders', 'index')->name('orders.index');
+        Route::post('/orders', 'store')->name('orders.store');
+        Route::delete('/orders/{order}', 'destroy')->name('orders.destroy');
+    });
 
     Route::controller(PaymentController::class)->group(function () {
         Route::post('/payments', 'store')->name('payments.store');
