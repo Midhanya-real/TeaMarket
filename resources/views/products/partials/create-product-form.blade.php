@@ -12,47 +12,60 @@
                     @csrf
 
                     <div>
-                        <x-input-label for="product" :value="__('name')"/>
-                        <x-text-input id="product" name="name" type="text" class="mt-1 block"
-                                      autocomplete="new-password"/>
+                        <div class="inline-flex">
+                            <div class="ml-3">
+                                <x-input-label for="product" :value="__('name')"/>
+                                <x-text-input id="product" name="name" type="text" class="mt-1 block"
+                                              autocomplete="new-password"/>
+                            </div>
+
+                            <div class="ml-3">
+                                <x-input-label for="weight" :value="__('weight')"/>
+                                <x-text-input id="weight" name="weight" type="number" step="any" class="mt-1 block"
+                                              autocomplete="new-password"/>
+                            </div>
+
+                            <div class="ml-3">
+                                <x-input-label for="price" :value="__('price')"/>
+                                <x-text-input id="price" name="price" type="number" step="any" class="mt-1 block"
+                                              autocomplete="new-password"/>
+                            </div>
+                        </div>
                     </div>
 
                     <div>
-                        <x-input-label for="weight" :value="__('weight')"/>
-                        <x-text-input id="weight" name="weight" type="number" step="any" class="mt-1 block" autocomplete="new-password"/>
+                        <div class="inline-flex">
+                            <div class="ml-3">
+                                <x-input-label for="category_id" :value="__('category_id')"/>
+                                <x-text-input id="category_id" name="category_id" type="text" class="mt-1 block"
+                                              autocomplete="new-password"/>
+                            </div>
+
+                            <div class="ml-3">
+                                <x-input-label for="type_id" :value="__('type_id')"/>
+                                <x-text-input id="type_id" name="type_id" type="text" class="mt-1 block"
+                                              autocomplete="new-password"/>
+                            </div>
+                        </div>
                     </div>
 
                     <div>
-                        <x-input-label for="price" :value="__('price')"/>
-                        <x-text-input id="price" name="price" type="number" step="any" class="mt-1 block"
-                                      autocomplete="new-password"/>
+                        <div class="inline-flex">
+                            <div class="ml-3">
+                                <x-input-label for="brand_id" :value="__('brand_id')"/>
+                                <x-text-input id="brand_id" name="brand_id" type="text" class="mt-1 block"
+                                              autocomplete="new-password"/>
+                            </div>
+
+                            <div class="ml-3">
+                                <x-input-label for="country_id" :value="__('country_id')"/>
+                                <x-text-input id="country_id" name="country_id" type="text" class="mt-1 block"
+                                              autocomplete="new-password"/>
+                            </div>
+                        </div>
                     </div>
 
-                    <div>
-                        <x-input-label for="category_id" :value="__('category_id')"/>
-                        <x-text-input id="category_id" name="category_id" type="text" class="mt-1 block"
-                                      autocomplete="new-password"/>
-                    </div>
-
-                    <div>
-                        <x-input-label for="type_id" :value="__('type_id')"/>
-                        <x-text-input id="type_id" name="type_id" type="text" class="mt-1 block"
-                                      autocomplete="new-password"/>
-                    </div>
-
-                    <div>
-                        <x-input-label for="brand_id" :value="__('brand_id')"/>
-                        <x-text-input id="brand_id" name="brand_id" type="text" class="mt-1 block"
-                                      autocomplete="new-password"/>
-                    </div>
-
-                    <div>
-                        <x-input-label for="country_id" :value="__('country_id')"/>
-                        <x-text-input id="country_id" name="country_id" type="text" class="mt-1 block"
-                                      autocomplete="new-password"/>
-                    </div>
-
-                    <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-4 ml-3">
                         <x-primary-button>{{ __('Save') }}</x-primary-button>
                     </div>
                 </form>

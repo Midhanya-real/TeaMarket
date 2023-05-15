@@ -1,7 +1,7 @@
-<div class="space-y-8">
+<div class="space-y-8 dark:bg-gray-900">
 
     @foreach($orders as $order)
-        <div class="block p-6 rounded-lg shadow-lg bg-white max-w-xl">
+        <div class="block p-6 rounded-lg shadow-lg bg-white max-w-xl ml-3 mt-3 mb-4">
             <a class="text-gray-900 text-xl leading-tight font-medium mb-2"
             >{{__('Order number: #')}}{{$order->id}}</a>
             <p class="text-gray-700 text-base mb-4">

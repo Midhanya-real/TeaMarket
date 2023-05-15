@@ -9,7 +9,6 @@ use App\Repository\CategoryRepository;
 use App\Services\UpdateModelServices\CategoryService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class CategoryController extends Controller
