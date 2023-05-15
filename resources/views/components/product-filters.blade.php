@@ -1,5 +1,5 @@
 <section>
-    <div class="block bg-blue-200 absolute left-0 top-2 space-y-4">
+    <div class="block bg-blue-200 relative left-0 top-2 space-y-4">
         <div class="block py-2 space-y-4 dark:bg-gray-800 shadow-sm sm:rounded-lg mx-auto left-0 top-3">
             <form method="GET" action="{{route('products.index')}}">
                 @csrf
