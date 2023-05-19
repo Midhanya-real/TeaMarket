@@ -1,6 +1,6 @@
 <section>
     <div class="flex justify-center mt-3 mx-px">
-        <div class="block p-6 rounded-lg shadow-lg bg-white space-y-2 max-w-xl space-x-2 m-3">
+        <div class="block p-6 rounded-lg shadow-lg bg-white space-y-2 max-w-xl space-x-2 m-3 mb-6">
 
             <p class="text-gray-700 text-base mb-4">
                 {{__('Name:')}}
