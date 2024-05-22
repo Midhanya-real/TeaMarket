@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 h-auto">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg h-auto">
-                <form method="post" action="{{ route('addresses.update', $address) }}" class="mt-6 space-y-6">
+                <form method="post" action="{{ route('profile.addresses.update', $address) }}" class="mt-6 space-y-6">
                     @csrf
                     @method('patch')
 

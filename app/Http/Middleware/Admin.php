@@ -18,7 +18,7 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response|RedirectResponse
     {
-        return $request->user()->isAdmin()
+        return $request->user()->isAdmin() || $request->user()->isModer()
             ? $next($request)
             : redirect()->route('homePage');
     }

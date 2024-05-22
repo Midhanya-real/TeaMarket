@@ -32,7 +32,7 @@
             </p>
 
             <div class="inline-flex">
-                <form method="GET" action="{{route('addresses.edit', $address)}}">
+                <form method="GET" action="{{route('profile.addresses.edit', $address)}}">
                     @csrf
                     @method('patch')
 
@@ -43,7 +43,7 @@
 
                 <div class="block p-6 rounded-lg max-w-xl"></div>
 
-                <form method="POST" action="{{route('addresses.destroy', $address)}}">
+                <form method="POST" action="{{route('profile.addresses.destroy', $address)}}">
                     @csrf
                     @method('delete')
 

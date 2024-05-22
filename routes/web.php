@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\AddressController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\Admin\AdminCategoryController;
+use App\Http\Controllers\Admin\AdminPaymentController;
+use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\Dashboard;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
@@ -24,34 +27,36 @@ Route::get('/', function () {
     return redirect('products');
 })->name('homePage');
 
-Route::resource('products', ProductController::class);
+Route::resource('products', ProductController::class)->only(['index', 'show']);
 
-Route::middleware('admin')->group(function () {
-    Route::resource('categories', CategoryController::class);
-    Route::resource('products', ProductController::class)->except('index', 'show');
+Route::middleware('admin')->prefix('admin')->group(function () {
+    Route::name('admin.')->group(function () {
+        Route::resource('users', AdminUserController::class);
+        Route::resource('categories', AdminCategoryController::class);
+        Route::resource('products', AdminProductController::class);
 
-    Route::controller(PaymentController::class)->group(function () {
-        Route::get('/payments', 'index')->name('payments.index');
-        Route::post('/payments/{order}/cancel', 'cancel')->name('payments.cancel');
-        Route::post('/payments/{order}/capture', 'capture')->name('payments.capture');
+        Route::name('payments.')->controller(AdminPaymentController::class)->group(function () {
+            Route::get('/payments', 'index')->name('index');
+            Route::post('/payments/{order}/cancel', 'cancel')->name('cancel');
+            Route::post('/payments/{order}/capture', 'capture')->name('capture');
+        });
     });
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('addresses', AddressController::class);
 
-    Route::controller(OrderController::class)->group(function () {
-        Route::get('/orders', 'index')->name('orders.index');
-        Route::post('/orders', 'store')->name('orders.store');
-        Route::delete('/orders/{order}', 'destroy')->name('orders.destroy');
+    Route::name('profile.')->group(function () {
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('destroy');
+        Route::resource('addresses', AddressController::class);
     });
 
-    Route::controller(PaymentController::class)->group(function () {
-        Route::post('/payments', 'store')->name('payments.store');
-        Route::post('/payments/{order}/refund', 'refund')->name('payments.refund');
+    Route::resource('orders', OrderController::class)->only(['index', 'store', 'destroy']);
+
+    Route::controller(PaymentController::class)->name('payments.')->group(function () {
+        Route::post('/payments', 'store')->name('store');
+        Route::post('/payments/{order}/refund', 'refund')->name('refund');
     });
 });
 

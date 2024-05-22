@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
@@ -11,18 +12,20 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class CategoryController extends Controller
+//TODO переебать вьюхи
+class AdminCategoryController extends Controller
 {
-
     public function __construct(
         private readonly CategoryRepository $repository,
         private readonly CategoryService    $service,
     )
-    {}
+    {
+    }
 
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return View
      */
     public function index(Request $request): View
@@ -52,7 +55,7 @@ class CategoryController extends Controller
     {
         $this->service->store($request);
 
-        return redirect()->route('categories.index');
+        return redirect()->route('admin.categories.index');
     }
 
     /**
@@ -77,7 +80,7 @@ class CategoryController extends Controller
     {
         $this->service->update(request: $request, category: $category);
 
-        return redirect()->route('categories.index');
+        return redirect()->route('admin.categories.index');
     }
 
     /**
@@ -91,6 +94,6 @@ class CategoryController extends Controller
     {
         $this->service->destroy(request: $request, category: $category);
 
-        return redirect()->route('categories.index');
+        return redirect()->route('admin.categories.index');
     }
 }

@@ -33,7 +33,7 @@ class ProductService implements ProductServiceInterface
             'type_id' => $request->type_id,
             'brand_id' => $request->brand_id,
             'country_id' => $request->country_id,
-            'category_id' => $request->category_id
+            'category_id' => $request->category_id,
         ]);
     }
 

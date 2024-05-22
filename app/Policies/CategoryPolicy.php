@@ -13,7 +13,7 @@ class CategoryPolicy
 
     public function before(User $user)
     {
-        if($user->isAdmin() || $user->isModer()){
+        if ($user->isAdmin() || $user->isModer()) {
             return true;
         }
     }
