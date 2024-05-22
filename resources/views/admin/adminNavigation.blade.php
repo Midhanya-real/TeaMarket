@@ -11,22 +11,36 @@
                     </x-nav-link>
                 </div>
 
-                @auth()
+                @if((Auth::user()->isAdmin()))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')">
-                            {{ __('Orders') }}
+                        <x-nav-link :href="route('admin.users.index')"
+                                    :active="request()->routeIs('admin.users.index')">
+                            {{ __('Users') }}
                         </x-nav-link>
                     </div>
+                @endif
 
-                    @if((Auth::user()->isAdmin() || Auth::user()->isModer()))
-                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <x-nav-link :href="route('admin.products.index')" :active="request()->routeIs('admin.products.index')">
-                                {{ __('Dashboard') }}
-                            </x-nav-link>
-                        </div>
-                    @endif
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('admin.categories.index')"
+                                :active="request()->routeIs('admin.categories.index')">
+                        {{ __('Categories') }}
+                    </x-nav-link>
+                </div>
 
-                @endauth
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('admin.products.index')"
+                                :active="request()->routeIs('admin.products.index')">
+                        {{ __('Products') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('admin.payments.index')"
+                                :active="request()->routeIs('admin.payments.index')">
+                        {{ __('Payments') }}
+                    </x-nav-link>
+                </div>
+
             </div>
 
             <!-- Settings Dropdown -->

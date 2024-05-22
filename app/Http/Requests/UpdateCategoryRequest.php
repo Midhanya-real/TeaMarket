@@ -14,7 +14,7 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        $category = $this->route('category');
+        $category = Category::find($this->route('admin.category'));
 
         return $this->user()->can('update', $category);
     }

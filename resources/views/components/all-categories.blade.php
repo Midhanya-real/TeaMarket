@@ -12,7 +12,7 @@
             </a>
 
             <div class="inline-flex mx-auto">
-                <form method="GET" action="{{route('categories.edit', $category)}}">
+                <form method="GET" action="{{route('admin.categories.edit', $category)}}">
                     @csrf
                     @method('patch')
 
@@ -23,7 +23,7 @@
 
                 <div class="block p-2 rounded-lg max-w-xl"></div>
 
-                <form method="POST" action="{{route('categories.destroy', $category)}}">
+                <form method="POST" action="{{route('admin.categories.destroy', $category)}}">
                     @csrf
                     @method('delete')
 

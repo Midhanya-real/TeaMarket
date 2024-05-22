@@ -54,7 +54,7 @@ class AddressController extends Controller
     {
         $this->service->store($request);
 
-        return redirect()->route('addresses.index');
+        return redirect()->route('profile.addresses.index');
     }
 
     /**
@@ -80,7 +80,7 @@ class AddressController extends Controller
         $this->service->update(request: $request, address: $address);
 
 
-        return redirect()->route('addresses.index');
+        return redirect()->route('profile.addresses.index');
     }
 
     /**
@@ -93,6 +93,6 @@ class AddressController extends Controller
     {
         $this->service->destroy(request: $request, address: $address);
 
-        return redirect()->route('addresses.index');
+        return redirect()->route('profile.addresses.index');
     }
 }

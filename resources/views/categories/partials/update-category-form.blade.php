@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-900 overflow-hidden shadow-sm sm:rounded-lg">
-                <form method="post" action="{{ route('categories.update', $category)}}" class="mt-6 space-y-6">
+                <form method="post" action="{{ route('admin.categories.update', $category)}}" class="mt-6 space-y-6">
                     @csrf
                     @method('patch')
                     <div class="ml-3">

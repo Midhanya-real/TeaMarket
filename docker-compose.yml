@@ -12,6 +12,8 @@ services:
             - '.docker/nginx/conf.d:/etc/nginx/conf.d/'
         depends_on:
             - php
+        networks:
+            - app-network
 
     php:
         container_name: php
@@ -24,6 +26,8 @@ services:
             - './:/var/www/'
         depends_on:
             - postgres
+        networks:
+            - app-network
 
     postgres:
         container_name: postgres
@@ -41,6 +45,8 @@ services:
             PGDATA: "/var/lib/postgresql/data"
         volumes:
             - 'pgdata:/var/lib/postgresql/data/'
+        networks:
+            - app-network
 
     cron:
         container_name: cron
@@ -50,5 +56,10 @@ services:
         volumes:
             - './:/var/www'
         restart: always
+        networks:
+            - app-network
 volumes:
     pgdata:
+networks:
+    app-network:
+        driver: bridge

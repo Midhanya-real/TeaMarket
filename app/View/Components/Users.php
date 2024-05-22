@@ -2,12 +2,10 @@
 
 namespace App\View\Components;
 
-use App\Models\Product;
-use Closure;
-use Illuminate\Contracts\View\View;
+use Illuminate\Support\LazyCollection;
 use Illuminate\View\Component;
 
-class productLand extends Component
+class Users extends Component
 {
     /**
      * Create a new component instance.
@@ -15,16 +13,18 @@ class productLand extends Component
      * @return void
      */
     public function __construct(
-        public Product $product
-    ){}
+        public LazyCollection $users,
+    )
+    {
+    }
 
     /**
      * Get the view / contents that represent the component.
      *
-     * @return View|Closure|string
+     * @return \Illuminate\Contracts\View\View|\Closure|string
      */
     public function render()
     {
-        return view('components.product-land');
+        return view('components.users');
     }
 }

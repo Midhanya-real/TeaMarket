@@ -13,7 +13,7 @@
 
                     <div class="flex items-center gap-4 ml-0 mb-4">
                         <x-primary-button>
-                            <a href="{{route('addresses.create')}}">
+                            <a href="{{route('profile.addresses.create')}}">
                                 {{__('Create')}}
                             </a></x-primary-button>
                     </div>
